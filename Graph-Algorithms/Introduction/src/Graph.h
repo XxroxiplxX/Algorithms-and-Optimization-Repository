@@ -9,6 +9,8 @@
 struct Vertex {
     int id = -1;
     char color = 'w';
+    int d;
+    int f;
     Vertex* parent = nullptr;
     std::vector<Vertex*> neighbours;
     Vertex(int _id) : id(_id), color('w'){}
@@ -27,12 +29,13 @@ struct Vertex {
 struct Tree {
     Vertex* root;
     Vertex* curr;
-    
+
 };
 struct Graph {
 public:
     std::vector<Vertex> vertices;
     int size;
+    int time = 0;
     void addEdge(int u, int v);
     Graph() {}
     Graph(int _size) : size(_size) {

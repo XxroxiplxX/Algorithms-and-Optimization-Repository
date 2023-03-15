@@ -15,12 +15,16 @@ public:
     int v;
     int e;
     char d;
+    GraphReader() {}
     GraphReader(std::string directory) {
         try {
             input.open(directory);
+            input.exceptions(std::ifstream::failbit);
             std::cout << "working on file named: " << directory << std::endl;
         } catch (const std::ifstream::failure& e) {
-            std::cout << "Exception opening/reading file";
+            std::cerr << e.what() << '\n';
+            std::cerr << "Exception opening/reading file";
+            exit(1);
         }
     }
     Graph buildGraph();

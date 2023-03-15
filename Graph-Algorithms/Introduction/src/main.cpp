@@ -1,35 +1,83 @@
 #include <iostream>
+#include <fstream>
 #include "Graph.h"
 #include "GraphReader.h"
 #include "Algorithms.h"
+#include <stack>
+enum flags {
+    ONE,
+    TWO,
+    THREE,
+    FOUR,
+    TREE,
+    FILEN,
+    NUMBER,
+    NONE
+};
 int main(int argc, char** argv) {
-   /*GraphReader* gr = new GraphReader(argv[1]);
-   gr->initialCheck();
-   if (gr->d == 'u') {
-       Graph g = gr->buildGraph();
-   }
-   delete gr;*/
-    std::cout << "argv[1]";
+    bool readfile = false;
+    std::string directory;
+    std::string filename;
+    std::stack<flags> fs;
+    flags f1;
+    flags f2;
+    flags f3;
+    for (int i = 1; i < argc; i++) {
+        if (argv[i][0] == '-') {
+            switch (argv[i][1]) {
+                case 'f' :
+                    fs.push(flags::FILEN);
+                    break;
+                case 'n' :
+                    fs.push(flags::NUMBER);
+                    break;
+                case 't' :
+                    f3 = flags::TREE;
+                    break;
+                default:
+                    std::cerr << "unknown flag" << std::endl;
+                    exit(1);
+            }
 
-   Graph g;
+        } else {
+            flags flag = fs.top();
+            switch (flag) {
+                case flags::FILEN:
+                    filename = std::string(argv[i]);
+                    break;
+                case flags::NUMBER:
+                    switch (argv[i][0]) {
+                        case '1' :
+                            f2 = flags::ONE;
+                            directory = "../../resources/";
+                            break;
+                        case '2' :
+                            f2 = flags::TWO;
+                            directory = "../../resources/2/";
+                            break;
+                        case '3' :
+                            f2 = flags::THREE;
+                            directory = "../../resources/3/";
+                            break;
+                        case '4' :
+                            f2 = flags::FOUR;
+                            directory = "../../resources/4/";
+                            break;
+                        default :
+                            std::cerr << "unknown condition\n";
+                            exit(1);
+                    }
 
-   for (int i = 1; i < 9; i++) {
-       g.addVertex(i);
-       std::cout << "start";
-   }
-    std::cout << "start";
-   g.addEdge(1,2);
+                    break;
+                case flags::TREE :
+                    break;
+            }
 
-   g.addEdge(3,2);
-    g.addEdge(1,4);
-    g.addEdge(4,5);
-    g.addEdge(4,6);
-    g.addEdge(5,6);
-    g.addEdge(5,8);
-    g.addEdge(6,8);
-    g.addEdge(6,7);
-    std::cout << "start";
-    BFS(g, g.getVertex(1));
-    printPath(g.getVertex(1), g.getVertex(6));
-   return 0;
+        }
+    }
+    directory+=filename;
+
+    auto gr = GraphReader(directory);
+    gr.initialCheck();
+    return 0;
 } //73,832

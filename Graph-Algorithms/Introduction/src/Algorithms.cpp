@@ -5,7 +5,7 @@
 #include "Algorithms.h"
 #include "queue"
 #include "iostream"
-void BFS(Graph graph, Vertex* source) {
+void BFS(Vertex* source) {
     source->color = 'g';
     std::queue<Vertex*> queue;
     queue.push(source);
@@ -25,19 +25,38 @@ void BFS(Graph graph, Vertex* source) {
         queue.pop();
         u->color = 'b';
     }
-    
-}
-void DFS(Graph graph, Vertex* source) {
 
+}
+void DFSvisit(Vertex* source, Graph* g) {
+    source->color = 'g';
+    g->time++;
+    source->d = g->time;
+    for (auto v : source->neighbours) {
+        if (v->color == 'w') {
+            v->parent = source;
+            DFSvisit(v, g);
+        }
+    }
+    source->color = 'b';
+    g->time++;
+    source->f = g->time;
+}
+void DFS(Graph* g) {
+    g->time = 0;
+    for (auto u : g->vertices) {
+        if (u.color == 'w') {
+            DFSvisit(&u, g);
+        }
+    }
 }
 void printPath(Vertex* source, Vertex* destination) {
     if (source == destination) {
         std::cout << source->id << "-->";
     } else if (destination->parent == nullptr) {
-            std::cout << "nie ma sciezki\n";
-        } else {
-            printPath(source, destination->parent);
-            std::cout << destination->id << "-->";
-        }
-    
+        std::cout << "nie ma sciezki\n";
+    } else {
+        printPath(source, destination->parent);
+        std::cout << destination->id << "-->";
+    }
+
 }
