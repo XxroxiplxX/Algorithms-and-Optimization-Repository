@@ -79,5 +79,7 @@ int main(int argc, char** argv) {
 
     auto gr = GraphReader(directory);
     gr.initialCheck();
+    AbstractGraph* ag;
+    ag = gr.buildDirectedGraph();
     return 0;
 } //73,832

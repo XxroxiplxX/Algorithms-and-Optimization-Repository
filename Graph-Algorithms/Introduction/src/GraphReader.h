@@ -8,13 +8,18 @@
 #include "fstream"
 #include "iostream"
 #include "Graph.h"
+enum types {
+    DIRECTED,
+    UNDIRECTED
+};
 class GraphReader {
 
 public:
     std::ifstream input;
     int v;
     int e;
-    char d;
+    types type;
+    //char d;
     GraphReader() {}
     GraphReader(std::string directory) {
         try {
@@ -22,13 +27,13 @@ public:
             input.exceptions(std::ifstream::failbit);
             std::cout << "working on file named: " << directory << std::endl;
         } catch (const std::ifstream::failure& e) {
-            std::cerr << e.what() << '\n';
-            std::cerr << "Exception opening/reading file";
+            //std::cerr << e.what() << '\n';
+            std::cerr << "Unknown file\n";
             exit(1);
         }
     }
-    Graph buildGraph();
-    DirectedGraph buildDirectedGraph();
+    Graph* buildGraph();
+    DirectedGraph* buildDirectedGraph();
     ~GraphReader() {
         input.close();
     }

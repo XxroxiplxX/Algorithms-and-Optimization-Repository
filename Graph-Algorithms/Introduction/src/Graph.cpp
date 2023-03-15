@@ -12,6 +12,9 @@ void Graph::addEdge(int u, int v) {
 }
 
 Vertex *Graph::getVertex(int id) {
+    if (vertices[id - 1].id == -1) {
+        vertices[id - 1].id = id;
+    }
     return &vertices[id - 1];
 }
 
@@ -21,11 +24,14 @@ void DirectedGraph::addEdge(int u, int v) {
     getVertex(u)->neighbours.push_back(getVertex(v));
 }
 
-void Graph::addVertex(int _id) {
+void AbstractGraph::addVertex(int _id) {
     vertices.push_back(Vertex(_id));
 }
 
 Vertex *DirectedGraph::getVertex(int id) {
+    if (vertices[id - 1].id == -1) {
+        vertices[id - 1].id = id;
+    }
     return &vertices[id - 1];
 }
 

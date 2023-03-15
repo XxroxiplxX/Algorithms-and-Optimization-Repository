@@ -25,15 +25,21 @@ struct Vertex {
     }*/
 
 };
-
+struct AbstractGraph {
+    virtual void addEdge(int u, int v) = 0;
+    void addVertex(int _id);
+    std::vector<Vertex> vertices;
+    int tex;
+    void wspolny() {}
+};
 struct Tree {
     Vertex* root;
     Vertex* curr;
 
 };
-struct Graph {
+struct Graph : public AbstractGraph{
 public:
-    std::vector<Vertex> vertices;
+    //std::vector<Vertex> vertices;
     int size;
     int time = 0;
     void addEdge(int u, int v);
@@ -41,7 +47,7 @@ public:
     Graph(int _size) : size(_size) {
         vertices = std::vector<Vertex>(size, Vertex());
     }
-    void addVertex(int _id);
+    //void addVertex(int _id);
     Vertex* getVertex(int id);
 
     /*
@@ -71,9 +77,9 @@ public:
     }
 };
 
-struct DirectedGraph {
+struct DirectedGraph : public AbstractGraph{
 public:
-    std::vector<Vertex> vertices;
+    //std::vector<Vertex> vertices;
     int size;
     void addEdge(int u, int v);
     Vertex* getVertex(int id);
