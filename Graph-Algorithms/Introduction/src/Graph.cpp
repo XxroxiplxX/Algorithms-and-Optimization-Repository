@@ -35,3 +35,13 @@ Vertex *DirectedGraph::getVertex(int id) {
     return &vertices[id - 1];
 }
 
+DirectedGraph *DirectedGraph::transpose() {
+    auto transposedGraph = new DirectedGraph(size);
+    for (int i = 0; i < size; i++) {
+        transposedGraph->vertices[i].id = i+1;
+        for (auto neigh : vertices[i].neighbours) {
+
+        }
+    }
+}
+

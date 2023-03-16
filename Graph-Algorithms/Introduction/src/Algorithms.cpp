@@ -27,7 +27,7 @@ void BFS(Vertex* source) {
     }
 
 }
-void DFSvisit(Vertex* source, Graph* g) {
+void DFSvisit(Vertex* source, AbstractGraph* g) {
     source->color = 'g';
     g->time++;
     source->d = g->time;
@@ -41,7 +41,7 @@ void DFSvisit(Vertex* source, Graph* g) {
     g->time++;
     source->f = g->time;
 }
-void DFS(Graph* g) {
+void DFS(AbstractGraph* g) {
     g->time = 0;
     for (auto u : g->vertices) {
         if (u.color == 'w') {

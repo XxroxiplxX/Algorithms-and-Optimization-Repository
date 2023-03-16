@@ -7,15 +7,16 @@
 void GraphReader::initialCheck() {
     std::string tmp;
     getline(input, tmp);
-    //std::cout << tmp;
-    if (tmp == "D") {
-        std::cout << "Directed      ";
-        //d = 'd';
-        type = types::DIRECTED;
+    type = types::UNDIRECTED;
+    for (auto item : tmp) {
+        if (item == 'D') {
+            type = types::DIRECTED;
+        }
+    }
+    if (type == DIRECTED) {
+        std::cout << "Directed:     ";
     } else {
-        std::cout << "Undirected      ";
-        //d = 'u';
-        type = types::UNDIRECTED;
+        std::cout << "Undirected:     ";
     }
     getline(input, tmp);
     v = std::stoi(tmp);
@@ -31,37 +32,19 @@ void GraphReader::initialCheck() {
 Graph* GraphReader::buildGraph() {
 
     Graph* g = new Graph(v);
-    std::string tmp;
-    int c = 0;
-    while (getline(input, tmp)) {
-        if (c > 2) {
-            std::string t;
-            int u, v;
-            bool flag = true;
-            for (auto item : tmp) {
-                if ((char)item != ' ') {
-                    t += item;
-                } else {
-                    if (flag) {
-                        u = std::stoi(t);
-                    } else {
-                        v = std::stoi(t);
-                    }
-                    flag = false;
-                    t = "";
-                }
-            }
-            g->addEdge(u, v);
-        } else {
-            c++;
-        }
+    std::string u;
+    std::string v;
+    for (int i = 0; i < e; i++) {
+        input >> u;
+        input >> v;
+        //td::cout << u << "  " << v << std::endl;
+        g->addEdge(std::stoi(u), std::stoi(v));
     }
+    std::cout << "Graph loaded with success\n";
     return g;
 }
 DirectedGraph* GraphReader::buildDirectedGraph() {
     DirectedGraph* g = new DirectedGraph(v);
-    std::string in;
-
 
     std::string u;
     std::string v;
@@ -71,6 +54,7 @@ DirectedGraph* GraphReader::buildDirectedGraph() {
         //td::cout << u << "  " << v << std::endl;
         g->addEdge(std::stoi(u), std::stoi(v));
     }
+    std::cout << "Graph loaded with success\n";
 
 
     /*

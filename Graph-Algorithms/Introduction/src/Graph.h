@@ -28,6 +28,7 @@ struct Vertex {
 struct AbstractGraph {
     virtual void addEdge(int u, int v) = 0;
     void addVertex(int _id);
+    int time = 0;
     std::vector<Vertex> vertices;
     int tex;
     void wspolny() {}
@@ -41,7 +42,7 @@ struct Graph : public AbstractGraph{
 public:
     //std::vector<Vertex> vertices;
     int size;
-    int time = 0;
+    //int time = 0;
     void addEdge(int u, int v);
     Graph() {}
     Graph(int _size) : size(_size) {
@@ -87,6 +88,7 @@ public:
     DirectedGraph(int _size) : size(_size) {
         vertices = std::vector<Vertex>(size, Vertex());
     }
+    DirectedGraph* transpose();
 };
 
 

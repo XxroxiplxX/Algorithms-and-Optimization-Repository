@@ -8,8 +8,8 @@
 #include "Logger.h"
 //Logging::Logger* log = new Logging::Logger("algos");
 void BFS(Vertex* source);
-void DFS(Graph* g);
-void DFSvisit(Vertex* source, Graph* g);
+void DFS(AbstractGraph* g);
+void DFSvisit(Vertex* source, AbstractGraph* g);
 void printPath(Vertex* source, Vertex* destination);
 //94855167282784
 //47239281841184

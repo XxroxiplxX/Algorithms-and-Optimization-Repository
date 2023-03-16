@@ -80,6 +80,10 @@ int main(int argc, char** argv) {
     auto gr = GraphReader(directory);
     gr.initialCheck();
     AbstractGraph* ag;
-    ag = gr.buildDirectedGraph();
+    if (gr.type == types::DIRECTED) {
+        ag = gr.buildDirectedGraph();
+    } else {
+        ag = gr.buildGraph();
+    }
     return 0;
 } //73,832
