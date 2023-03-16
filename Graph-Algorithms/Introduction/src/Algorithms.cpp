@@ -41,3 +41,10 @@ void printPath(Vertex* source, Vertex* destination) {
         }
     
 }
+DirectedGraph* transposition(DirectedGraph* graph) {
+    DirectedGraph* ndg = new DirectedGraph(graph->vertices.size());
+    for (int i = 0; i < ndg->vertices.size(); i++) {
+        ndg->vertices[i].id = graph->vertices[i].id;
+       
+    }
+}

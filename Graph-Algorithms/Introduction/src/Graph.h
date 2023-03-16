@@ -77,7 +77,7 @@ public:
     DirectedGraph(){}
     DirectedGraph(int _size) : size(_size) {
         vertices = std::vector<Vertex>(size, Vertex());
-    }
+    } 
 };
 
 
