@@ -6,15 +6,18 @@
 #define INTRODUCTION_GRAPH_H
 #include <vector>
 #include "iostream"
+#include <fstream>
 struct Vertex {
     int id = -1;
     char color = 'w';
     int d;
     int f;
     Vertex* parent = nullptr;
+    int parent_id = -1;
     std::vector<Vertex*> neighbours;
-    Vertex(int _id) : id(_id), color('w'){}
+    Vertex(int _id) : id(_id), color('w'), parent(nullptr){}
     Vertex() {}
+    ~Vertex();
     /*
     std::string color() {
         if ((long) this % 2) {
@@ -28,10 +31,15 @@ struct Vertex {
 struct AbstractGraph {
     virtual void addEdge(int u, int v) = 0;
     void addVertex(int _id);
+    void cleanTree();
     int time = 0;
+    Vertex* getVertex(int id);
     std::vector<Vertex> vertices;
+    void saveToCSV(std::string modifier);
+    void saveTreeToCSV(std::string modifier);
     int tex;
     void wspolny() {}
+    ~AbstractGraph();
 };
 struct Tree {
     Vertex* root;
@@ -49,7 +57,7 @@ public:
         vertices = std::vector<Vertex>(size, Vertex());
     }
     //void addVertex(int _id);
-    Vertex* getVertex(int id);
+
 
     /*
     void addVertex(int id, bool color){
@@ -83,7 +91,7 @@ public:
     //std::vector<Vertex> vertices;
     int size;
     void addEdge(int u, int v);
-    Vertex* getVertex(int id);
+
     DirectedGraph(){}
     DirectedGraph(int _size) : size(_size) {
         vertices = std::vector<Vertex>(size, Vertex());

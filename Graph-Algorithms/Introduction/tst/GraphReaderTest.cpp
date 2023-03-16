@@ -4,6 +4,7 @@
 #include "gtest/gtest.h"
 #include "GraphReader.h"
 #include "Graph.h"
+#include "Algorithms.h"
 class GraphReaderTest : public testing::Test {
 public:
     GraphReader* gr;
@@ -25,6 +26,8 @@ TEST_F(GraphReaderTest, ReadingDirectedGraphCorrectenss)
 {
     gr->initialCheck();
     directedGraph = gr->buildDirectedGraph();
+
+    EXPECT_EQ(16,directedGraph->vertices.size());
     for (int i = 1; i < 17; i++) {
         EXPECT_EQ(i, directedGraph->getVertex(i)->id);
     }
@@ -32,4 +35,6 @@ TEST_F(GraphReaderTest, ReadingDirectedGraphCorrectenss)
     EXPECT_FALSE(areDirectIncidential(directedGraph->getVertex(6),directedGraph->getVertex(1)));
     EXPECT_TRUE(areDirectIncidential(directedGraph->getVertex(3),directedGraph->getVertex(2)));
     EXPECT_TRUE(areDirectIncidential(directedGraph->getVertex(2),directedGraph->getVertex(3)));
+    BFS(directedGraph->getVertex(2));
+    directedGraph->saveTreeToCSV();
 }

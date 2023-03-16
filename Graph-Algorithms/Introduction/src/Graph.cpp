@@ -11,7 +11,7 @@ void Graph::addEdge(int u, int v) {
     getVertex(v)->neighbours.push_back(getVertex(u));
 }
 
-Vertex *Graph::getVertex(int id) {
+Vertex *AbstractGraph::getVertex(int id) {
     if (vertices[id - 1].id == -1) {
         vertices[id - 1].id = id;
     }
@@ -28,12 +28,55 @@ void AbstractGraph::addVertex(int _id) {
     vertices.push_back(Vertex(_id));
 }
 
-Vertex *DirectedGraph::getVertex(int id) {
-    if (vertices[id - 1].id == -1) {
-        vertices[id - 1].id = id;
-    }
-    return &vertices[id - 1];
+void AbstractGraph::saveToCSV(std::string modifier) {
+        std::ofstream outdata_v;
+        std::ofstream outdata_e;
+        outdata_v.open("/tmp/graph_v" + modifier + ".csv");
+        outdata_e.open("/tmp/graph_e" + modifier + ".csv");
+        outdata_v << "v" << ";" << std::endl;
+        outdata_e << "e1" << ";" << "e2" << std::endl;
+        for (auto vertex : vertices) {
+            outdata_v << vertex.id << ";" << std::endl;
+        }
+        outdata_v.close();
+        for (auto vertex : vertices) {
+            for (auto neighbour : vertex.neighbours) {
+                outdata_e << vertex.id << ";" << neighbour->id << std::endl;
+            }
+        }
+        outdata_e.close();
 }
+
+void AbstractGraph::saveTreeToCSV(std::string modifier) {
+    std::ofstream outdata_v;
+    std::ofstream outdata_e;
+    outdata_v.open("/tmp/graph_v" + modifier + ".csv");
+    outdata_e.open("/tmp/graph_e" + modifier + ".csv");
+    outdata_v << "v" << ";" << std::endl;
+    outdata_e << "e1" << ";" << "e2" << std::endl;
+    for (auto vertex : vertices) {
+        outdata_v << vertex.id << ";" << std::endl;
+    }
+    outdata_v.close();
+    for (auto vertex : vertices) {
+        if (vertex.parent_id != -1) {
+            //std::cout << vertex.id << ";" << vertex.parent_id << std::endl;
+            outdata_e << vertex.id << ";" << vertex.parent_id << std::endl;
+        }
+    }
+}
+
+void AbstractGraph::cleanTree() {
+    for (auto& vertex : vertices) {
+        vertex.parent_id = -1;
+        vertex.color = 'w';
+    }
+}
+
+AbstractGraph::~AbstractGraph() {
+
+}
+
 
 DirectedGraph *DirectedGraph::transpose() {
     auto transposedGraph = new DirectedGraph(size);
@@ -45,3 +88,6 @@ DirectedGraph *DirectedGraph::transpose() {
     }
 }
 
+Vertex::~Vertex() {
+
+}

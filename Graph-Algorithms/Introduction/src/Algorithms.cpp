@@ -10,15 +10,15 @@ void BFS(Vertex* source) {
     std::queue<Vertex*> queue;
     queue.push(source);
     //log->log(queue.front()->id);
-    std::cout << "\n" << queue.front()->id << std::endl;
+    //std::cout << "\n" << queue.front()->id << std::endl;
     while (!queue.empty()) {
         auto u = queue.front();
-        std :: cout << "odwiedzono wierzcholek: " << u->id << std::endl;
+        std :: cout << "visiting vertex with id: " << u->id << std::endl;
         for (auto v : u->neighbours) {
             if (v->color == 'w') {
                 v->color = 'g';
                 //u->neighbours.push_back(v);
-                v->parent = u;
+                v->parent_id = u->id;
                 queue.push(v);
             }
         }
@@ -28,16 +28,20 @@ void BFS(Vertex* source) {
 
 }
 void DFSvisit(Vertex* source, AbstractGraph* g) {
-    source->color = 'g';
+    //source->color = 'b';
+    g->getVertex(source->id)->color = 'g';
     g->time++;
     source->d = g->time;
     for (auto v : source->neighbours) {
         if (v->color == 'w') {
-            v->parent = source;
+            //v->parent = source;
+            std :: cout << "visiting vertex with id: " << v->id << std::endl;
+            v->parent_id = source->id;
+            //std::cout << source->id << " is now parent of " << v->id << std::endl;
             DFSvisit(v, g);
         }
     }
-    source->color = 'b';
+    g->getVertex(source->id)->color = 'b';
     g->time++;
     source->f = g->time;
 }
