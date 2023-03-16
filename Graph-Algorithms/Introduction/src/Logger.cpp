@@ -12,5 +12,5 @@ namespace Logging {
     void Logger::log(int param) {
         output << param << std::endl;
     }
-    
-}     
+
+}

@@ -7,51 +7,81 @@
 void GraphReader::initialCheck() {
     std::string tmp;
     getline(input, tmp);
-    std::cout << tmp;
-    if (tmp == "D") {
-        std::cout << "Directed      ";
-        d = 'd';
+    type = types::UNDIRECTED;
+    for (auto item : tmp) {
+        if (item == 'D') {
+            type = types::DIRECTED;
+        }
+    }
+    if (type == DIRECTED) {
+        std::cout << "Directed:     ";
     } else {
-        std::cout << "Undirected      ";
-        d = 'u';
+        std::cout << "Undirected:     ";
     }
     getline(input, tmp);
     v = std::stoi(tmp);
     getline(input, tmp);
     e = std::stoi(tmp);
-    std :: cout << "|V| = " << v << "   |E| = " << e << "   ";
+    std :: cout << "|V| = " << v << "   |E| = " << e << "   \n";
     if (e > 0.9*v*v) {
         std::cout << "Gesty\n";
     }
+    //std::cout << tmp << "-------\n";
 }
 
-Graph GraphReader::buildGraph() {
+Graph* GraphReader::buildGraph() {
 
-    Graph g(v);
+    Graph* g = new Graph(v);
+    std::string u;
+    std::string v;
+    for (int i = 0; i < e; i++) {
+        input >> u;
+        input >> v;
+        //td::cout << u << "  " << v << std::endl;
+        g->addEdge(std::stoi(u), std::stoi(v));
+    }
+    std::cout << "Graph loaded with success\n";
+    return g;
+}
+DirectedGraph* GraphReader::buildDirectedGraph() {
+    DirectedGraph* g = new DirectedGraph(v);
+
+    std::string u;
+    std::string v;
+    for (int i = 0; i < e; i++) {
+        input >> u;
+        input >> v;
+        //td::cout << u << "  " << v << std::endl;
+        g->addEdge(std::stoi(u), std::stoi(v));
+    }
+    std::cout << "Graph loaded with success\n";
+
+
+    /*
     std::string tmp;
-    int c = 0;
+    int b = 0;
     while (getline(input, tmp)) {
-        if (c > 2) {
+
+            std::cout << tmp <<  std::endl;
             std::string t;
-            int u, v;
+            int _u, _v;
             bool flag = true;
             for (auto item : tmp) {
                 if ((char)item != ' ') {
                     t += item;
                 } else {
                     if (flag) {
-                        u = std::stoi(t);
+                        _u = std::stoi(t);
                     } else {
-                        v = std::stoi(t);
+                        _v = std::stoi(t);
                     }
                     flag = false;
                     t = "";
                 }
             }
-            g.addEdge(u, v);
-        } else {
-            c++;
-        }
-    }
+
+            g->addEdge(_u, _v);
+
+    }*/
     return g;
 }

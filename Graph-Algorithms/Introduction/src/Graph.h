@@ -9,6 +9,8 @@
 struct Vertex {
     int id = -1;
     char color = 'w';
+    int d;
+    int f;
     Vertex* parent = nullptr;
     std::vector<Vertex*> neighbours;
     Vertex(int _id) : id(_id), color('w'){}
@@ -23,22 +25,30 @@ struct Vertex {
     }*/
 
 };
-
+struct AbstractGraph {
+    virtual void addEdge(int u, int v) = 0;
+    void addVertex(int _id);
+    int time = 0;
+    std::vector<Vertex> vertices;
+    int tex;
+    void wspolny() {}
+};
 struct Tree {
     Vertex* root;
     Vertex* curr;
-    
+
 };
-struct Graph {
+struct Graph : public AbstractGraph{
 public:
-    std::vector<Vertex> vertices;
+    //std::vector<Vertex> vertices;
     int size;
+    //int time = 0;
     void addEdge(int u, int v);
     Graph() {}
     Graph(int _size) : size(_size) {
         vertices = std::vector<Vertex>(size, Vertex());
     }
-    void addVertex(int _id);
+    //void addVertex(int _id);
     Vertex* getVertex(int id);
 
     /*
@@ -68,16 +78,17 @@ public:
     }
 };
 
-struct DirectedGraph {
+struct DirectedGraph : public AbstractGraph{
 public:
-    std::vector<Vertex> vertices;
+    //std::vector<Vertex> vertices;
     int size;
     void addEdge(int u, int v);
     Vertex* getVertex(int id);
     DirectedGraph(){}
     DirectedGraph(int _size) : size(_size) {
         vertices = std::vector<Vertex>(size, Vertex());
-    } 
+    }
+    DirectedGraph* transpose();
 };
 
 
