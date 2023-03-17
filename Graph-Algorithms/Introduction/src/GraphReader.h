@@ -12,6 +12,11 @@ enum types {
     DIRECTED,
     UNDIRECTED
 };
+enum State {
+    ANALYZED,
+    BUILT,
+    OPENED
+};
 class GraphReader {
 
 public:
@@ -19,6 +24,7 @@ public:
     int v;
     int e;
     types type;
+    State state;
     std::string dir;
     //char d;
     GraphReader() {}
@@ -28,6 +34,7 @@ public:
             input.open(directory);
             input.exceptions(std::ifstream::failbit);
             std::cout << "working on file named: " << directory << std::endl;
+            state = OPENED;
         } catch (const std::ifstream::failure& e) {
             //std::cerr << e.what() << '\n';
             std::cerr << "Unknown file\n";

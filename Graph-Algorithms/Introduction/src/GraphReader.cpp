@@ -26,11 +26,16 @@ void GraphReader::initialCheck() {
     if (e > 0.9*v*v) {
         std::cout << "Gesty\n";
     }
+    state = ANALYZED;
     //std::cout << tmp << "-------\n";
 }
 
 Graph* GraphReader::buildGraph() {
-
+    if (state != ANALYZED) {
+        input.close();
+        input.open(dir);
+        initialCheck();
+    }
     Graph* g = new Graph(v);
     std::string u;
     std::string v;
@@ -41,9 +46,16 @@ Graph* GraphReader::buildGraph() {
         g->addEdge(std::stoi(u), std::stoi(v));
     }
     std::cout << "Graph loaded with success\n";
+    state = BUILT;
     return g;
 }
 DirectedGraph* GraphReader::buildDirectedGraph() {
+    if (state != ANALYZED) {
+        input.close();
+        input.open(dir);
+        initialCheck();
+    }
+
     DirectedGraph* g = new DirectedGraph(v);
 
     std::string u;
@@ -56,40 +68,16 @@ DirectedGraph* GraphReader::buildDirectedGraph() {
     }
     std::cout << "Graph loaded with success\n";
 
-
-    /*
-    std::string tmp;
-    int b = 0;
-    while (getline(input, tmp)) {
-
-            std::cout << tmp <<  std::endl;
-            std::string t;
-            int _u, _v;
-            bool flag = true;
-            for (auto item : tmp) {
-                if ((char)item != ' ') {
-                    t += item;
-                } else {
-                    if (flag) {
-                        _u = std::stoi(t);
-                    } else {
-                        _v = std::stoi(t);
-                    }
-                    flag = false;
-                    t = "";
-                }
-            }
-
-            g->addEdge(_u, _v);
-
-    }*/
+    state = BUILT;
     return g;
 }
 
 DirectedGraph *GraphReader::buildTransposedDirectedGraph() {
-    input.close();
-    input.open(dir);
-    initialCheck();
+    if (state != ANALYZED) {
+        input.close();
+        input.open(dir);
+        initialCheck();
+    }
 
     DirectedGraph* g = new DirectedGraph(v);
 
@@ -102,5 +90,6 @@ DirectedGraph *GraphReader::buildTransposedDirectedGraph() {
         g->addEdge(std::stoi(v), std::stoi(u));
     }
     std::cout << "Graph loaded with success\n";
+    state = BUILT;
     return g;
 }
