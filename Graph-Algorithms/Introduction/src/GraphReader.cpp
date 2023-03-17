@@ -85,3 +85,22 @@ DirectedGraph* GraphReader::buildDirectedGraph() {
     }*/
     return g;
 }
+
+DirectedGraph *GraphReader::buildTransposedDirectedGraph() {
+    input.close();
+    input.open(dir);
+    initialCheck();
+
+    DirectedGraph* g = new DirectedGraph(v);
+
+    std::string u;
+    std::string v;
+    for (int i = 0; i < e; i++) {
+        input >> u;
+        input >> v;
+        //td::cout << u << "  " << v << std::endl;
+        g->addEdge(std::stoi(v), std::stoi(u));
+    }
+    std::cout << "Graph loaded with success\n";
+    return g;
+}

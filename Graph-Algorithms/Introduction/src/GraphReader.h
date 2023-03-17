@@ -19,9 +19,11 @@ public:
     int v;
     int e;
     types type;
+    std::string dir;
     //char d;
     GraphReader() {}
     GraphReader(std::string directory) {
+        dir = directory;
         try {
             input.open(directory);
             input.exceptions(std::ifstream::failbit);
@@ -34,6 +36,7 @@ public:
     }
     Graph* buildGraph();
     DirectedGraph* buildDirectedGraph();
+    DirectedGraph* buildTransposedDirectedGraph();
     ~GraphReader() {
         input.close();
     }

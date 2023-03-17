@@ -82,7 +82,7 @@ public:
         }
     }*/
     void show() {
-        std::cout << this;
+        //std::    << this;
     }
 };
 

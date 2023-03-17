@@ -80,12 +80,12 @@ AbstractGraph::~AbstractGraph() {
 
 DirectedGraph *DirectedGraph::transpose() {
     auto transposedGraph = new DirectedGraph(size);
-    for (int i = 0; i < size; i++) {
-        transposedGraph->vertices[i].id = i+1;
-        for (auto neigh : vertices[i].neighbours) {
-
+    for (auto vertex : vertices) {
+        for (auto neigh : vertex.neighbours) {
+            transposedGraph->addEdge(neigh->id, vertex.id);
         }
     }
+    return transposedGraph;
 }
 
 Vertex::~Vertex() {
