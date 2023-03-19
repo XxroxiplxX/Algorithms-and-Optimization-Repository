@@ -6,11 +6,14 @@
 #define INTRODUCTION_ALGORITHMS_H
 #include "Graph.h"
 #include "Logger.h"
+#include <list>
 //Logging::Logger* log = new Logging::Logger("algos");
 void BFS(Vertex* source);
 void DFS(AbstractGraph* g);
 void DFSvisit(Vertex* source, AbstractGraph* g);
 void printPath(Vertex* source, Vertex* destination);
+std::list<std::pair<int, int>> topologicalSort(DirectedGraph* dg);
+bool topoDFSVisit(Vertex* source, DirectedGraph* dg, std::list<std::pair<int, int>>& sortedList);
 //94855167282784
 //47239281841184
 

@@ -7,6 +7,10 @@
 #include <vector>
 #include "iostream"
 #include <fstream>
+enum cyclic {
+    CYCLIC,
+    ACYCLIC
+};
 struct Vertex {
     int id = -1;
     char color = 'w';
@@ -90,6 +94,7 @@ struct DirectedGraph : public AbstractGraph{
 public:
     //std::vector<Vertex> vertices;
     int size;
+    cyclic c;
     void addEdge(int u, int v);
 
     DirectedGraph(){}

@@ -142,6 +142,14 @@ int main(int argc, char** argv) {
             auto gr = GraphReader(directory);
             gr.initialCheck();
             DirectedGraph* dg = gr.buildDirectedGraph();
+            //DFS(dg);
+            auto list = topologicalSort(dg);
+            if (dg->c == ACYCLIC and dg->vertices.size() < 200) {
+                for (auto item : list) {
+                    std::cout << "[" << item.first << "   " << item.second << "]" << " --> ";
+                }
+                std::cout << "\n";
+            }
             //TODO topological sort
         }
         break;
@@ -166,15 +174,7 @@ int main(int argc, char** argv) {
             //TODO Bipartite Graph
         }
         default:
-            directory+=filename;
-            auto gr = GraphReader(directory);
-            gr.initialCheck();
-            AbstractGraph* ag;
-            if (gr.type == types::DIRECTED) {
-                ag = gr.buildDirectedGraph();
-            } else {
-                ag = gr.buildGraph();
-            }
+
             break;
     }
     return 0;

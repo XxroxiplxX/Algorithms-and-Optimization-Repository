@@ -12,6 +12,8 @@ void Graph::addEdge(int u, int v) {
 }
 
 Vertex *AbstractGraph::getVertex(int id) {
+    if (id == 0 or id > vertices.size())
+        std::cout << "blad";
     if (vertices[id - 1].id == -1) {
         vertices[id - 1].id = id;
     }
