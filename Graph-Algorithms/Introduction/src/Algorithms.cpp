@@ -114,3 +114,20 @@ std::list<std::pair<int, int>> topologicalSort(DirectedGraph* dg) {\
     }
     return sortedList;
 }
+void sortedDFS(DirectedGraph* dg, std::list<std::pair<int,int>> sortedVertices) {
+    for (auto item : sortedVertices) {
+        std::cout << "[" << item.first << "   " << item.second << "]" << " --> ";
+        if (dg->getVertex(item.first)->color == 'w') {
+            DFSvisit(dg->getVertex(item.first), dg);
+        }
+    }
+}
+DirectedGraph* stronglyConnectedComponents(DirectedGraph* dg) {
+    auto transposedDirectedGraph = dg->transpose();
+    auto sortedVerticesList = topologicalSort(dg);
+    sortedDFS(transposedDirectedGraph, sortedVerticesList);
+    return transposedDirectedGraph;
+}
+void printForest(AbstractGraph* ag) {
+
+}

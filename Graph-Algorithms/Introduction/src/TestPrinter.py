@@ -24,10 +24,10 @@ def d(dirtitle, direction):
 
 if __name__ == "__main__":
     G=d(sys.argv[2], 'D')
-    if sys.argv[1] == 'D':
-        nx.draw(G, with_labels=True, font_weight='bold', node_color='green', node_size=800, pos=nx.spring_layout(G))
+    if sys.argv[3] == 'shell':
+        nx.draw_shell(G, with_labels=True, font_weight='bold', node_color='green', node_size=800)
     else:
-        nx.draw(G, with_labels=True, font_weight='bold', node_color='green')
+        nx.draw(G, with_labels=True, font_weight='bold', node_color='green', node_size=800)
 
     print('plot done')
     plt.savefig('../../plots/' + sys.argv[2] + '_test.png')

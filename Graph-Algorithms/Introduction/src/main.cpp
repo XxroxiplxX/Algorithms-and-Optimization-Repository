@@ -158,6 +158,11 @@ int main(int argc, char** argv) {
             auto gr = GraphReader(directory);
             gr.initialCheck();
             DirectedGraph* dg = gr.buildDirectedGraph();
+            dg->saveToCSV("dgforcomps");
+            system("python ../../src/TestPrinter.py D dgforcomps shell");
+            auto result = stronglyConnectedComponents(dg);
+            result->saveTreeToCSV("comps");
+            system("python ../../src/TestPrinter.py D comps shell");
             //TODO strong coherent component
         }
         break;
