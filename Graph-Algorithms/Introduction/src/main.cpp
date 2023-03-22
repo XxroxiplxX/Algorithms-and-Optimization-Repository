@@ -158,11 +158,14 @@ int main(int argc, char** argv) {
             auto gr = GraphReader(directory);
             gr.initialCheck();
             DirectedGraph* dg = gr.buildDirectedGraph();
-            dg->saveToCSV("dgforcomps");
-            system("python ../../src/TestPrinter.py D dgforcomps shell");
+            //dg->saveToCSV("dgforcomps");
+            //system("python ../../src/TestPrinter.py D dgforcomps shell");
             auto result = stronglyConnectedComponents(dg);
-            result->saveTreeToCSV("comps");
-            system("python ../../src/TestPrinter.py D comps shell");
+            //result->saveTreeToCSV("comps");
+            auto cp = result->transformTreeToNormalFormGraph();
+            //DFS(cp);
+            //cp->saveToCSV("comps");
+            //system("python ../../src/TestPrinter.py D comps shell");
             //TODO strong coherent component
         }
         break;
@@ -176,7 +179,50 @@ int main(int argc, char** argv) {
             } else {
                 ag = gr.buildGraph();
             }
+            //ag->saveToCSV("bipart");
+            //system("python ../../src/TestPrinter.py D bipart f");
             //TODO Bipartite Graph
+            //bool bi = isBipartite(ag);
+            if (isBipartite(ag)) {
+                std::cout << "Is bipartite\n";
+                if (ag->vertices.size() <= 200) {
+                    std::list<int> v1;
+                    std::list<int> v2;
+                    for (auto item : ag->vertices) {
+                        if (item.color == 'r') {
+                            v1.push_back(item.id);
+                        } else {
+                            v2.push_back(item.id);
+                        }
+                    }
+                    int max;
+                    if (v1.size() > v2.size()) {
+                        max = v1.size();
+                    } else {
+                        max = v2.size();
+                    }
+                    ag->saveToCSV("bipart");
+                    system("python ../../src/TestPrinter.py D bipart f");
+                    auto it1 = v1.begin(), it2 = v2.begin();
+                    std::cout << "v0  |  v1\n";
+                    std::cout << "----------\n";
+                    for (int i = 0; i < max; i++) {
+                        if (it1 != v1.end()) {
+                            std::cout << *it1;
+                            it1++;
+                        }
+                        std::cout << "   |   ";
+                        if (it2 != v2.end()) {
+                            std::cout << *it2;
+                            it2++;
+                        }
+                        std::cout << std::endl;
+                    }
+                }
+
+            } else {
+                std::cout << "Is not bipartite\n";
+            }
         }
         default:
 

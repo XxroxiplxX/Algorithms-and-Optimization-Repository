@@ -41,6 +41,7 @@ void DFSvisit(Vertex* source, AbstractGraph* g) {
             DFSvisit(v, g);
         }
     }
+
     g->getVertex(source->id)->color = 'b';
     g->time++;
     g->getVertex(source->id)->f = g->time;
@@ -49,6 +50,7 @@ void DFS(AbstractGraph* g) {
     g->time = 0;
     for (auto u : g->vertices) {
         if (u.color == 'w') {
+            std::cout << "aaa\n";
             DFSvisit(&u, g);
         }
     }
@@ -62,7 +64,7 @@ bool topoDFSVisit(Vertex* source, DirectedGraph* dg, std::list<std::pair<int,int
             //v->parent = source;
             //std :: cout << "visiting vertex with id: " << v->id << std::endl;
             v->parent_id = source->id;
-            //std::cout << source->id << " is now parent of " << v->id << std::endl;
+            std::cout << source->id << " is now parent of " << v->id << std::endl;
             topoDFSVisit(v, dg, sortedList);
         }
     }
@@ -114,11 +116,27 @@ std::list<std::pair<int, int>> topologicalSort(DirectedGraph* dg) {\
     }
     return sortedList;
 }
+void IDFSvisit(Vertex* source, DirectedGraph* dg) {
+    std::stack<int> s;
+    s.push(source->id);
+    while (!s.empty()) {
+        source = dg->getVertex(s.top());
+        dg->getVertex(s.top())->color = 'g';
+        s.pop();
+        for (auto v : source->neighbours) {
+            s.push(v->id);
+            v->parent_id = source->id;
+        }
+    }
+}
 void sortedDFS(DirectedGraph* dg, std::list<std::pair<int,int>> sortedVertices) {
+    //std::stack<int> s;
     for (auto item : sortedVertices) {
-        std::cout << "[" << item.first << "   " << item.second << "]" << " --> ";
+        //std::cout << "[" << item.first << "   " << item.second << "]" << " --> ";
         if (dg->getVertex(item.first)->color == 'w') {
-            DFSvisit(dg->getVertex(item.first), dg);
+            //s.push(item.first);
+            //DFSvisit(dg->getVertex(item.first), dg);
+
         }
     }
 }
@@ -128,6 +146,52 @@ DirectedGraph* stronglyConnectedComponents(DirectedGraph* dg) {
     sortedDFS(transposedDirectedGraph, sortedVerticesList);
     return transposedDirectedGraph;
 }
+void DFSTreeVisit(Vertex* source, DirectedGraph* dg) {
+
+}
 void printForest(AbstractGraph* ag) {
 
+}
+bool isBipartite(AbstractGraph* ag) {
+    int currColor = 1;
+    for (int i = 0; i < ag->vertices.size(); i++) {
+        if (ag->vertices[i].color == 'w') {
+            std::cout << "vertex " << ag->vertices[i].id << std::endl;
+            auto source = ag->getVertex(i+1);
+            //source->color = 'g';
+            std::queue<Vertex*> queue;
+            queue.push(source);
+            //log->log(queue.front()->id);
+            //std::cout << "\n" << queue.front()->id << std::endl;
+            source->color = 'r';
+            while (!queue.empty()) {
+                auto u = queue.front();
+                //u->color = 62 + currColor;
+                //std::cout << u->id << "Upokolorowano na: " << u->color << std::endl;
+                currColor *= -1;
+                //std :: cout << "visiting vertex with id: " << u->id << std::endl;
+                for (auto v : u->neighbours) {
+                    if (v->color == 'w') {
+                        //v->color = u->color + currColor;
+                        if (u->color == 'r') {
+                            v->color = 'b';
+                        } else {
+                            v->color = 'r';
+                        }
+                        //std::cout << v->id <<  "Vpokolorowano na: " << v->color << std::endl;
+                        currColor *= -1;
+                        //u->neighbours.push_back(v);
+                        //v->parent_id = u->id;
+                        queue.push(v);
+                    } else if (v->color == u->color) {
+                        //std::cout << "wierzcholki " << v->id << " i " << u->id << std::endl;
+                        return false;
+                    }
+                }
+                queue.pop();
+                //u->color = 'b';
+            }
+        }
+    }
+    return  true;
 }

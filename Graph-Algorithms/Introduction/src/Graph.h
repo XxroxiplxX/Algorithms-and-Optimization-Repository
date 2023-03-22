@@ -33,6 +33,7 @@ struct Vertex {
 
 };
 struct AbstractGraph {
+    AbstractGraph* transformTreeToNormalFormGraph();
     virtual void addEdge(int u, int v) = 0;
     void addVertex(int _id);
     void cleanTree();
@@ -96,7 +97,7 @@ public:
     int size;
     cyclic c;
     void addEdge(int u, int v);
-
+    Graph* transformTreeToNormalFormGraph();
     DirectedGraph(){}
     DirectedGraph(int _size) : size(_size) {
         vertices = std::vector<Vertex>(size, Vertex());

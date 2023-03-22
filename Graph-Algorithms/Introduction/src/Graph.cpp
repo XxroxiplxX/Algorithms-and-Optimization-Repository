@@ -79,6 +79,17 @@ AbstractGraph::~AbstractGraph() {
 
 }
 
+Graph* DirectedGraph::transformTreeToNormalFormGraph() {
+    auto normalTree = new Graph(vertices.size());
+    for (int i = 0; i < vertices.size(); i++) {
+        normalTree->vertices[i].id = vertices[i].id;
+        if (vertices[i].parent_id != -1) {
+            normalTree->addEdge(vertices[i].id, vertices[i].parent_id);
+        }
+    }
+    return normalTree;
+}
+
 
 DirectedGraph *DirectedGraph::transpose() {
     auto transposedGraph = new DirectedGraph(size);

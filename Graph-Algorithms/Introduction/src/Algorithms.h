@@ -7,6 +7,7 @@
 #include "Graph.h"
 #include "Logger.h"
 #include <list>
+#include <stack>
 //Logging::Logger* log = new Logging::Logger("algos");
 void BFS(Vertex* source);
 void DFS(AbstractGraph* g);
@@ -16,7 +17,10 @@ std::list<std::pair<int, int>> topologicalSort(DirectedGraph* dg);
 bool topoDFSVisit(Vertex* source, DirectedGraph* dg, std::list<std::pair<int, int>>& sortedList);
 void sortedDFS(DirectedGraph* dg, std::list<std::pair<int,int>> sortedVertices);
 DirectedGraph* stronglyConnectedComponents(DirectedGraph* dg);
-void printForest(AbstractGraph* ag);
+void DFSTreeVisit(Vertex* source, DirectedGraph* dg);
+void printForest(DirectedGraph* dg);
+void IDFSvisit(Vertex* source, DirectedGraph* dg);
+bool isBipartite(AbstractGraph* ag);
 //94855167282784
 //47239281841184
 
