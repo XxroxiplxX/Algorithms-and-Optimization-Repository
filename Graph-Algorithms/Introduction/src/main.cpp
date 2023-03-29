@@ -144,7 +144,7 @@ int main(int argc, char** argv) {
             DirectedGraph* dg = gr.buildDirectedGraph();
             //DFS(dg);
             auto list = topologicalSort(dg);
-            if (dg->c == ACYCLIC and dg->vertices.size() < 200) {
+            if (dg->c == ACYCLIC and dg->vertices.size() <= 200) {
                 for (auto item : list) {
                     std::cout << "[" << item.first << "   " << item.second << "]" << " --> ";
                 }
@@ -160,12 +160,19 @@ int main(int argc, char** argv) {
             DirectedGraph* dg = gr.buildDirectedGraph();
             //dg->saveToCSV("dgforcomps");
             //system("python ../../src/TestPrinter.py D dgforcomps shell");
-            auto result = stronglyConnectedComponents(dg);
+            std::list<std::pair<Vertex*,int>> heads;
+            auto result = stronglyConnectedComponents(dg, heads);
+            std::cout <<"detected " << heads.size() << "SCCs\n each head is:\n";
+            for (auto pair : heads) {
+                std::cout << "head: " << pair.first->id << " of component with size: " << pair.second << std::endl;
+            }
             //result->saveTreeToCSV("comps");
-            auto cp = result->transformTreeToNormalFormGraph();
-            //DFS(cp);
-            //cp->saveToCSV("comps");
-            //system("python ../../src/TestPrinter.py D comps shell");
+            if (result->vertices.size() <= 200) {
+                auto cp = result->transformTreeToNormalFormGraph();
+                //DFS(cp);
+                cp->saveToCSV("comps");
+                system("python ../../src/TestPrinter.py D comps shell");
+            }
             //TODO strong coherent component
         }
         break;
