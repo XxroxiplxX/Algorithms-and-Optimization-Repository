@@ -1,6 +1,6 @@
 
 cmake_minimum_required(VERSION 3.10)
-project(Introduction)
+project(Sorting-Algorithms)
 
 set(CMAKE_CXX_STANDARD 17)
 
