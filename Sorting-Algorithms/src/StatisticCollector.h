@@ -7,8 +7,10 @@
 
 
 struct StatisticCollector {
-    __int128 comparisons;
-    __int128 swaps;
+    long long comparisons = 0;
+    long long swaps = 0;
+    long long partialComps = 0;
+    long long partialSwaps = 0;
 };
 
 
