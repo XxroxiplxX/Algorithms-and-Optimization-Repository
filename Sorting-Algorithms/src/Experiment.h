@@ -11,7 +11,6 @@
 #include <map>
 #include "Algorithms.h"
 class Experiment {
-    //std::ofstream output;
     Generator generator;
 public:
     void insertionExperiment(int repetitions);

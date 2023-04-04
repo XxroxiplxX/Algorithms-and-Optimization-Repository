@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Algorithms.h"
-#include "Generator.h"
 #include "Experiment.h"
 #include "Colors.h"
 #include "StatisticCollector.h"
