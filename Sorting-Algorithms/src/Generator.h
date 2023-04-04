@@ -6,10 +6,13 @@
 #define SORTING_ALGORITHMS_GENERATOR_H
 
 #include <random>
+#include <ctime>
+
 class Generator {
     std::mt19937 mt;
+
 public:
-    Generator(){}
+    Generator(){srand(time(nullptr)); mt = std::mt19937 (rand());}
     int* produceRandomArray(int range);
 };
 

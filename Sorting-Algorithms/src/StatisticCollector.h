@@ -11,6 +11,7 @@ struct StatisticCollector {
     long long swaps = 0;
     long long partialComps = 0;
     long long partialSwaps = 0;
+    void reset() {partialSwaps = 0; partialComps = 0;}
 };
 
 

@@ -6,5 +6,5 @@ set(SOURCES ${SOURCES})
 
 add_executable(${BINARY}_run ${SOURCES})
 
-add_library(${BINARY}_lib STATIC ${SOURCES} Algorithms.h Algorithms.cpp StatisticCollector.cpp StatisticCollector.h Experiment.cpp Experiment.h Generator.cpp)
+add_library(${BINARY}_lib STATIC ${SOURCES} Algorithms.h Algorithms.cpp StatisticCollector.cpp StatisticCollector.h Experiment.cpp Experiment.h Generator.cpp Colors.h)
 
