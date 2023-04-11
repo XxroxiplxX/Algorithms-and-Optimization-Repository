@@ -4,7 +4,6 @@
 
 #ifndef SORTING_ALGORITHMS_ALGORITHMS_H
 #define SORTING_ALGORITHMS_ALGORITHMS_H
-
 #include <utility>
 #include "StatisticCollector.h"
 void print(int* arr, int low, int high);
