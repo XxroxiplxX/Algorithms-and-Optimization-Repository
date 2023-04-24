@@ -1,6 +1,6 @@
 using GLPK, JuMP, DelimitedFiles
 #4
-k = 1
+k = 2
 #m rows, n columns
 containers = readdlm("dataset/containers-assignment/containers.txt", Bool)
 m = size(containers, 1)
@@ -21,3 +21,9 @@ assignment = Model(GLPK.Optimizer)
 optimize!(assignment)
 @show objective_value(assignment);
 @show value.(cameras);
+for i in 1:m
+    for j in 1:n
+        print(value(containers[i,j]), ' ')
+    end
+    print('\n')
+end
