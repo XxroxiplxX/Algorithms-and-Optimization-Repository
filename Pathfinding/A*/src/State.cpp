@@ -32,57 +32,15 @@ int find_gap(const uint8_t* _arr) {
     }
     return -1;
 }
-std::list<State *> State::produce_neighbours() {
-    std::list<State*> neighbours;
-    auto tmp_board = produce_matrix_view(this->board);
-    int gap = find_gap(tmp_board);
-    if (gap > 3) {
-        neighbours.push_back(new State(tmp_board, this, UP, gap));
-    }
-    if (gap < 12) {
-        neighbours.push_back(new State(tmp_board, this, DOWN, gap));
-    }
-    if (gap%4 != 0) {
-        neighbours.push_back(new State(tmp_board, this, LEFT, gap));
-    }
-    if (gap%4 != 3) {
-        neighbours.push_back(new State(tmp_board, this, RIGHT, gap));
-    }
-    delete[] tmp_board;
-    return neighbours;
-}
 
-State::State(uint8_t* _decoded_board, State* _predecessor, move m, int gap) {
-    switch (m) {
-        case move::UP:
-            std::swap(_decoded_board[gap], _decoded_board[gap - 4]);
-            break;
-        case move::DOWN:
-            std::swap(_decoded_board[gap], _decoded_board[gap + 4]);
-            break;
-        case move::RIGHT:
-            std::swap(_decoded_board[gap], _decoded_board[gap + 1]);
-            break;
-        case move::LEFT:
-            std::swap(_decoded_board[gap], _decoded_board[gap - 1]);
-            break;
-    }
-    this->board = compress_matrix(_decoded_board);
-    this->predecessor = _predecessor;
-    this->g_score = 0;
-}
+
+
 
 bool State::operator==(const State &state) {
     return this->board == state.board;
 }
 
-void State::set_predecessor(State *state) {
-    this->predecessor = state;
-}
 
-State *State::get_predecessor() {
-    return this->predecessor;
-}
 
 int improved_manhattan_heuristic_cost(State state) {
     int dr = 0;
@@ -142,19 +100,111 @@ int improved_manhattan_heuristic_cost(State state) {
     delete[] _tmp_board;
     return dr + m_cost;
 }
+int manhattan_heuristic_cost(State state) {
 
-bool ManhattanState::operator<(const State &state) {
-    return false;
+    int m_cost = 0;
+    auto _tmp_board = produce_matrix_view(state.board);
+    for (int i = 0; i < SIZE; i++) {
+
+        if (_tmp_board[i] != 0) {
+            int x_pos = i%4;
+            int y_pos = i/4;
+            int x_dest = (_tmp_board[i] - 1)%4;
+            int y_dest = (_tmp_board[i] - 1)/4;
+            m_cost += abs(x_pos - x_dest) + abs(y_pos - y_dest);
+        }
+
+    }
+    delete[] _tmp_board;
+    return m_cost;
+}
+void swap(uint8_t* arr, int i, int j) {
+    auto tmp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = tmp;
+}
+std::string print_board(uint8_t* board) {
+    std::string out = "";
+    for (int i = 0; i < SIZE; i++) {
+        out += std::to_string(board[i]);
+        out += "   ";
+        if (i%4 == 3) {
+            out += "\n";
+        }
+    }
+    return out;
+}
+void move_gap(uint8_t* _board, move m, int gap) {
+    switch(m) {
+        case UP:
+            swap(_board, gap, gap-4);
+            break;
+        case DOWN:
+            swap(_board, gap, gap+4);
+            break;
+        case RIGHT:
+            swap(_board, gap, gap+1);
+            break;
+        case LEFT:
+            swap(_board, gap, gap-1);
+            break;
+    }
 }
 
-std::list<ManhattanState *> ManhattanState::produce_neighbours() {
-    return State::produce_neighbours();
+
+int get_inv_count(int* arr)
+{
+    int inv_count = 0;
+    for (int i = 0; i < N * N - 1; i++)
+    {
+        for (int j = i + 1; j < N * N; j++)
+        {
+            // count pairs(arr[i], arr[j]) such that
+            // i < j but arr[i] > arr[j]
+            if (arr[j] && arr[i] && arr[i] > arr[j])
+                inv_count++;
+        }
+    }
+    return inv_count;
 }
 
-bool ImprovedState::operator<(const State &state) {
-    return improved_manhattan_heuristic_cost(*this) + this->g_score < improved_manhattan_heuristic_cost(state) + state.g_score;
+// find Position of blank from bottom
+int find_gap_position(int puzzle[N][N])
+{
+    // start from bottom-right corner of matrix
+    for (int i = N - 1; i >= 0; i--)
+        for (int j = N - 1; j >= 0; j--)
+            if (puzzle[i][j] == 0)
+                return N - i;
 }
 
-std::list<ImprovedState *> ImprovedState::produce_neighbours() {
-    return State::produce_neighbours();
+
+bool is_solvable(uint64_t board)
+{
+    auto tmp = produce_matrix_view(board);
+    int puzzle[N][N];
+    int c = 0;
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            puzzle[i][j] = (int)tmp[c];
+            c++;
+        }
+    }
+    delete[] tmp;
+    // Count inversions in given puzzle
+    int invCount = get_inv_count((int*)puzzle);
+
+    // If grid is odd, return true if inversion
+    // count is even.
+    if (N & 1)
+        return !(invCount & 1);
+
+    else     // grid is even
+    {
+        int pos = find_gap_position(puzzle);
+        if (pos & 1)
+            return !(invCount & 1);
+        else
+            return invCount & 1;
+    }
 }
