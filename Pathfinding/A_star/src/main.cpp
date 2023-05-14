@@ -15,6 +15,7 @@ int main(int argc, char** argv) {
         call_a_star(heuristic, 0, log, std::stoi(rep));
     } else {
         Logger log("../../logs/presentation.log");
+        log.log("aaa");
         call_a_star("improved", 0, log);
     }
 

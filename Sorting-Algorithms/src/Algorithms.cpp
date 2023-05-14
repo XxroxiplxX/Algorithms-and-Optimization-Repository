@@ -214,7 +214,7 @@ std::pair<int,int> dual_partition(int* arr, int low, int high, StatisticCollecto
     while (k <= g) {
 
         if (arr[k] < p) {
-            swap(&arr[k], &arr[j]);\
+            swap(&arr[k], &arr[j]);
             sc.partialSwaps++;
             j++;
         }

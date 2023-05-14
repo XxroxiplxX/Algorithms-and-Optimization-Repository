@@ -17,7 +17,7 @@
 using namespace Logging;
 int a_star_search_improved(ImprovedState* start, std::list<ImprovedState*>& safe_delete, Logger& logger);
 int a_star_search_manhattan(ManhattanState* start, std::list<ManhattanState*>& safe_delete, Logger& logger);
-void call_a_star(std::string option, bool xtreme, Logger& stats, int repetitions=21);
+void call_a_star(std::string option, bool xtreme, Logger& stats, int repetitions=12  );
 bool contains(std::list<ImprovedState*> list, uint64_t goal);
 bool contains(std::set<ImprovedState*> set, uint64_t goal);
 bool contains(std::list<ManhattanState*> list, uint64_t goal);

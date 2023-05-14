@@ -46,7 +46,7 @@ int a_star_search_improved(ImprovedState* start, std::list<ImprovedState*>& safe
     start->g_score = 0;
     open_set.insert(start);
     while (!open_set.empty()) {
-        if (safe_delete.size() > 30000) {
+        if (safe_delete.size() > 300000) {
             return -1;
         }
         auto x = *open_set.begin();
@@ -57,7 +57,7 @@ int a_star_search_improved(ImprovedState* start, std::list<ImprovedState*>& safe
             auto tmp = produce_matrix_view(x->board);
             //std::cout << "final state:\n" << print_board(tmp) << std::endl;
             delete[] tmp;
-            std::cout << safe_delete.size() << std::endl;
+            //std::cout << safe_delete.size() << std::endl;
             //std::cout << "moves: " << safe_delete.size() << std::endl;
             //std::cout << reconstruct_path(x);
             //logger.log(reconstruct_path(x));
@@ -69,6 +69,7 @@ int a_star_search_improved(ImprovedState* start, std::list<ImprovedState*>& safe
             //logger.log("przechodze po sasiadach");
             safe_delete.push_back(nbh);
             //logger.log("dodano vertex, wielkosc grafu to: ", safe_delete.size());
+            std::cout << safe_delete.size() << std::endl;
             if (contains(closed_set, nbh->board)) {
                 continue;
             }
@@ -139,22 +140,22 @@ uint64_t randomize_board(std::mt19937 generator, std::uniform_int_distribution<i
     int i = 0;
     while (i < repetitions) {
         r = distribution(generator);
-        if (r == 0 && gap > 3 and last != DOWN) {
+        if (r == 0 && gap > 3) {
             move_gap(tmp_board, UP, gap);
             last = UP;
             i++;
         }
-        else if (r == 1 && gap < 12 and last != UP) {
+        else if (r == 1 && gap < 12) {
             move_gap(tmp_board, DOWN, gap);
             last = DOWN;
             i++;
         }
-        else if (r == 2 && gap%4 != 0 and last != RIGHT) {
+        else if (r == 2 && gap%4 != 0 ) {
             move_gap(tmp_board, LEFT, gap);
             last = LEFT;
             i++;
         }
-        else if (r == 3 && gap%4 != 3 and last != LEFT) {
+        else if (r == 3 && gap%4 != 3 ) {
             move_gap(tmp_board, RIGHT, gap);
             last = RIGHT;
             i++;
@@ -221,7 +222,7 @@ void call_a_star(std::string option, bool xtreme, Logger& stats, int repetitions
         safe_delete.push_back(start);
         logger.log("initializing algorithm...");
         int i = a_star_search_improved(start, safe_delete, logger);
-        stats.log("", i);
+        logger.log("number of states: ", i);
         logger.log("deallocating graph with size: ", safe_delete.size());
         for (auto& vertex : safe_delete) {
             delete vertex;

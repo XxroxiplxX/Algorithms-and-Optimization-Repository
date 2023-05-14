@@ -1,10 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy
-x=[]
-y=[]
-def f(x):
-    return 
-plt.scatter(data["no"], data["comparisons"], color = 'r', label = 'liczba przeszukanych stanow')
+
+data = numpy.genfromtxt("../data/binary_search/bsearch_begin_comps100.csv", delimiter = ";", names = ["n", "comps"])
+
+plt.scatter(data["n"], data["comps"], color = 'r', label = 'liczba porownan')
 #plt.scatter(n,n)
 #plt.plot(X,y,color = 'b', label = 'Ograniczenie funkcją sześcienną')
 plt.xlabel("Rozmiar instancji")
