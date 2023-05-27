@@ -36,7 +36,7 @@ int find_gap(const uint8_t* _arr) {
 
 
 
-bool State::operator==(const State &state) {
+bool State::operator==(const State &state) const{
     return this->board == state.board;
 }
 

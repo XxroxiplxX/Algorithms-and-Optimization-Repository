@@ -12,9 +12,11 @@ struct ManhattanState : public State{
     ManhattanState(uint64_t _board) {
         this->board = _board;
         this->g_score = 0;
+        this->f_score = 0;
+        this->h_score = 0;
     }
     ManhattanState(uint8_t* _decoded_board, ManhattanState* _predecessor);
-    bool operator <(const ManhattanState& state);
+
     void set_predecessor(ManhattanState* state);
     State* get_predecessor();
     ~ManhattanState() {
@@ -23,5 +25,10 @@ struct ManhattanState : public State{
     ManhattanState* predecessor;
 };
 
+struct ManhattanComparer {
+    bool operator () (ManhattanState* m1, ManhattanState* m2) {
+        return m1->f_score > m2->f_score;
+    }
+};
 
 #endif //A_MANHATTANSTATE_H

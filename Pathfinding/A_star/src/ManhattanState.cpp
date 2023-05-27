@@ -3,9 +3,7 @@
 //
 
 #include "ManhattanState.h"
-bool ManhattanState::operator<(const ManhattanState &state) {
-    return manhattan_heuristic_cost(*this) + this->g_score < manhattan_heuristic_cost(state) + state.g_score;
-}
+
 
 std::list<ManhattanState*> ManhattanState::produce_neighbours() {
     std::list<ManhattanState*> neighbours;
@@ -71,4 +69,6 @@ ManhattanState::ManhattanState(uint8_t *_decoded_board, ManhattanState *_predece
     this->board = compress_matrix(_decoded_board);
     this->predecessor = _predecessor;
     this->g_score = 0;
+    this->h_score =0;
+    this->f_score = 0;
 }

@@ -4,7 +4,7 @@
 
 #include "ImprovedState.h"
 bool ImprovedState::operator<(const ImprovedState &state) {
-    return improved_manhattan_heuristic_cost(*this) + this->g_score < improved_manhattan_heuristic_cost(state) + state.g_score;
+    return improved_manhattan_heuristic_cost(*this) + this->g_score < improved_manhattan_heuristic_cost(state) + state.g_score and this->board != state.board;
 }
 
 std::list<ImprovedState *> ImprovedState::produce_neighbours() {

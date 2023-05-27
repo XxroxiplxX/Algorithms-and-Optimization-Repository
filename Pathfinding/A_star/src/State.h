@@ -20,10 +20,12 @@ enum move {
 struct State {
     uint64_t board;
     int g_score;
+    int h_score;
+    int f_score;
     State(){}
     State(uint64_t _board) : board(_board), g_score(0){}
     ~State() = default;
-    bool operator ==(const State& state);
+    bool operator ==(const State& state) const;
 
 private:
     //State* predecessor;
