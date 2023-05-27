@@ -80,13 +80,13 @@ int main(int argc, char** argv) {
 
 
     } else {
-        Experiment experiment;/*
+        Experiment experiment;
         experiment.select_experiment(100);
         experiment.random_select_experiment(100);
         experiment.select_k_experiment(100,3);
         experiment.select_k_experiment(100,5);
         experiment.select_k_experiment(100,7);
-        experiment.select_k_experiment(100,9);*/
+        experiment.select_k_experiment(100,9);
         experiment.binary_search_experiment(100);
     }
     return 0;

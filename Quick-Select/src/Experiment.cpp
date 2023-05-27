@@ -27,7 +27,8 @@ void Experiment::select_experiment(int repetitions) {
     }
     std::ofstream swaps("../../data/select/select_pos_5_swaps" + std::to_string(repetitions) + ".csv");
     std::ofstream comps("../../data/select/select_pos_5_comps" + std::to_string(repetitions) + ".csv");
-
+    swaps << "n" << ";" << "swaps" << std::endl;
+    comps << "n" << ";" << "comps" << std::endl;
     for (auto item : records) {
         swaps << item.first << ";" << item.second.swaps << std::endl;
         comps << item.first << ";" << item.second.comparisons << std::endl;
@@ -54,12 +55,13 @@ void Experiment::select_experiment(int repetitions) {
     }
     std::ofstream swaps_median("../../data/select/select_pos_median_swaps" + std::to_string(repetitions) + ".csv");
     std::ofstream comps_median("../../data/select/select_pos_median_comps" + std::to_string(repetitions) + ".csv");
-
+    swaps_median << "n" << ";" << "swaps" << std::endl;
+    comps_median << "n" << ";" << "comps" << std::endl;
     for (auto item : records) {
-        swaps << item.first << ";" << item.second.swaps << std::endl;
-        comps << item.first << ";" << item.second.comparisons << std::endl;
+        swaps_median << item.first << ";" << item.second.swaps << std::endl;
+        comps_median << item.first << ";" << item.second.comparisons << std::endl;
     }
-    swaps_median.close();
+    comps_median.close();
     comps_median.close();
 
 }
@@ -83,7 +85,8 @@ void Experiment::random_select_experiment(int repetitions) {
     }
     std::ofstream swaps("../../data/random_select/rand_select_pos_5_swaps" + std::to_string(repetitions) + ".csv");
     std::ofstream comps("../../data/random_select/rand_select_pos_5_comps" + std::to_string(repetitions) + ".csv");
-
+    swaps << "n" << ";" << "swaps" << std::endl;
+    comps << "n" << ";" << "comps" << std::endl;
     for (auto item : records) {
         swaps << item.first << ";" << item.second.swaps << std::endl;
         comps << item.first << ";" << item.second.comparisons << std::endl;
@@ -111,9 +114,11 @@ void Experiment::random_select_experiment(int repetitions) {
     std::ofstream swaps_median("../../data/random_select/rand_select_pos_median_swaps" + std::to_string(repetitions) + ".csv");
     std::ofstream comps_median("../../data/random_select/rand_select_pos_median_comps" + std::to_string(repetitions) + ".csv");
 
+    swaps_median << "n" << ";" << "swaps" << std::endl;
+    comps_median << "n" << ";" << "comps" << std::endl;
     for (auto item : records) {
-        swaps << item.first << ";" << item.second.swaps << std::endl;
-        comps << item.first << ";" << item.second.comparisons << std::endl;
+        swaps_median << item.first << ";" << item.second.swaps << std::endl;
+        comps_median << item.first << ";" << item.second.comparisons << std::endl;
     }
     swaps_median.close();
     comps_median.close();
@@ -138,7 +143,8 @@ void Experiment::select_k_experiment(int repetitions, int param) {
     }
     std::ofstream swaps("../../data/select" + std::to_string(param) + "/select_pos_5_swaps" + std::to_string(repetitions) + ".csv");
     std::ofstream comps("../../data/select" + std::to_string(param) + "/select_pos_5_comps" + std::to_string(repetitions) + ".csv");
-
+    swaps << "n" << ";" << "swaps" << std::endl;
+    comps << "n" << ";" << "comps" << std::endl;
     for (auto item : records) {
         swaps << item.first << ";" << item.second.swaps << std::endl;
         comps << item.first << ";" << item.second.comparisons << std::endl;
@@ -165,10 +171,11 @@ void Experiment::select_k_experiment(int repetitions, int param) {
     }
     std::ofstream swaps_median("../../data/select" + std::to_string(param) + "/select_pos_median_swaps" + std::to_string(repetitions) + ".csv");
     std::ofstream comps_median("../../data/select" + std::to_string(param) + "/select_pos_median_comps" + std::to_string(repetitions) + ".csv");
-
+    swaps_median << "n" << ";" << "swaps" << std::endl;
+    comps_median << "n" << ";" << "comps" << std::endl;
     for (auto item : records) {
-        swaps << item.first << ";" << item.second.swaps << std::endl;
-        comps << item.first << ";" << item.second.comparisons << std::endl;
+        swaps_median << item.first << ";" << item.second.swaps << std::endl;
+        comps_median << item.first << ";" << item.second.comparisons << std::endl;
     }
     swaps_median.close();
     comps_median.close();
@@ -195,7 +202,7 @@ void Experiment::binary_search_experiment(int repetitions) {
         std::cout << "bsearch    " <<  25*k/repetitions << "% done\n";
     }
     std::ofstream comps_begin("../../data/binary_search/bsearch_begin_comps" + std::to_string(repetitions) + ".csv");
-
+    comps_begin << "n" << ";" << "comps" << std::endl;
     for (auto item : records) {
         //std::cout << item.second.comparisons << std::endl;
         comps_begin << item.first << ";" << item.second.comparisons << std::endl;
@@ -220,7 +227,7 @@ void Experiment::binary_search_experiment(int repetitions) {
         std::cout << "bsearch    " <<  25+25*k/repetitions << "% done\n";
     }
     std::ofstream comps_mid("../../data/binary_search/bsearch_mid_comps" + std::to_string(repetitions) + ".csv");
-
+    comps_mid << "n" << ";" << "comps" << std::endl;
     for (auto item : records) {
         comps_mid << item.first << ";" << item.second.comparisons << std::endl;
     }
@@ -245,7 +252,7 @@ void Experiment::binary_search_experiment(int repetitions) {
         std::cout << "bsearch    " <<  50+25*k/repetitions << "% done\n";
     }
     std::ofstream comps_end("../../data/binary_search/bsearch_end_comps" + std::to_string(repetitions) + ".csv");
-
+    comps_end << "n" << ";" << "comps" << std::endl;
     for (auto item : records) {
         comps_mid << item.first << ";" << item.second.comparisons << std::endl;
     }
@@ -271,7 +278,7 @@ void Experiment::binary_search_experiment(int repetitions) {
         std::cout << "bsearch    " <<  75+25*k/repetitions << "% done\n";
     }
     std::ofstream comps_random("../../data/binary_search/bsearch_random_comps" + std::to_string(repetitions) + ".csv");
-
+    comps_random << "n" << ";" << "comps" << std::endl;
     for (auto item : records) {
         comps_random << item.first << ";" << item.second.comparisons << std::endl;
     }

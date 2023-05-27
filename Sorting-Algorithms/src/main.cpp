@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
         bool flag = n<40;
         std::cout << cMagenta << "insertion sort:\n" << cReset;
         StatisticCollector stats;
-        insertion_sort(arr_for_ins, 0, n, stats, flag);
+        stats.insertion_sort(arr_for_ins, 0, n, flag);
         std::cout << cGreen <<  "posortowana tablica:\n" << cReset;
         print(arr_for_ins, 0, n);
         delete[] arr_for_ins;
@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
 
 
         std::cout << cMagenta << "merge sort:\n" << cReset;
-        mergeSort(arr_for_merge, 0, n, stats, flag);
+        stats.mergeSort(arr_for_merge, 0, n, flag);
         std::cout << cGreen <<  "posortowana tablica:\n" << cReset;
         print(arr_for_merge, 0, n);
         delete[] arr_for_merge;
@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
 
 
         std::cout << cMagenta <<  "quick sort:\n" << cReset;
-        quick_sort(arr_for_quick, 0, n, stats, flag);
+        stats.quick_sort(arr_for_quick, 0, n, flag);
         std::cout << cGreen <<  "posortowana tablica:\n" << cReset;
         print(arr_for_quick, 0, n);
         delete[] arr_for_quick;
@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
 
 
         std::cout << cMagenta << "dual pivot quick sort:\n" << cReset;
-        dualPivotQuickSort(arr_for_dual_pivot, 0, n, stats, flag);
+        stats.dualPivotQuickSort(arr_for_dual_pivot, 0, n, flag);
         std::cout << cGreen <<  "posortowana tablica:\n" << cReset;
         print(arr_for_dual_pivot, 0, n);
         delete[] arr_for_dual_pivot;
@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
 
 
         std::cout << cMagenta << "hybrid quick sort sort:\n" << cReset;
-        hybrid_quick_sort(arr_for_hybrid, 0, n-1, stats, flag);
+        stats.hybrid_quick_sort(arr_for_hybrid, 0, n-1, flag);
         std::cout << cGreen <<  "posortowana tablica:\n" << cReset;
         print(arr_for_hybrid, 0, n);
         delete[] arr_for_hybrid;
@@ -76,13 +76,13 @@ int main(int argc, char** argv) {
 
     } else {
         Experiment experiment;
-        for (int k = 1; k <= 100; k++) {
+        int k = 100;
             experiment.insertionExperiment(k);
             experiment.mergeExperiment(k);
             experiment.quickExperiment(k);
             experiment.dualPivotExperiment(k);
             experiment.hybridExperiment(k);
-        }
+        
     }
     return 0;
 }

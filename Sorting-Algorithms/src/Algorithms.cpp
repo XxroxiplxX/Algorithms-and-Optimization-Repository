@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Algorithms.h"
 #include "Colors.h"
+#include "StatisticCollector.h"
 void swap(int* a, int* b)
 {
     int temp = *a;
@@ -16,24 +17,24 @@ void print(int* arr, int low, int high) {
     }
     std::cout << "\n";
 }
-void insertion_sort(int* arr, int low, int n, StatisticCollector& sc, bool presentation)
+void StatisticCollector::insertion_sort(int* arr, int low, int n, bool presentation)
 {
 
     for(int i=low+1;i<n+1;i++)
     {
         int val = arr[i] ;
-        sc.partialSwaps++;
+        partialSwaps++;
         int j = i ;
         while (j>low && arr[j-1]>val)
         {
-            sc.partialComps++;
+            partialComps++;
             arr[j]= arr[j-1] ;
-            sc.partialSwaps++;
+            partialSwaps++;
             j-= 1;
         }
-        sc.partialComps++;
+        partialComps++;
         arr[j]= val ;
-        sc.partialSwaps++;
+        partialSwaps++;
         if (presentation) {
             std::cout << cBlue << "po wstawieniu\n" << cReset;
             print(arr, low, n-1);
@@ -44,10 +45,10 @@ void insertion_sort(int* arr, int low, int n, StatisticCollector& sc, bool prese
 
 
 
-int partition(int* arr, int low, int high, StatisticCollector& sc)
+int StatisticCollector::partition(int* arr, int low, int high)
 {
     int pivot = arr[high] ;
-    sc.partialSwaps++;
+    partialSwaps++;
     int i ,j;
     i = low;
     j = low;
@@ -60,15 +61,15 @@ int partition(int* arr, int low, int high, StatisticCollector& sc)
             arr[i] = arr[j];
             arr[j] = temp;
             j += 1;
-            sc.partialComps+=3;
+            partialComps+=3;
         }
-        sc.partialComps++;
+        partialComps++;
     }
 
     int temp = arr[j];
     arr[j] = arr[high];
     arr[high] = temp;
-    sc.partialSwaps+=3;
+    partialSwaps+=3;
 
     return j;
 }
@@ -77,37 +78,37 @@ int partition(int* arr, int low, int high, StatisticCollector& sc)
 
 
 
-void quick_sort(int* arr, int low,int high, StatisticCollector& sc, bool presentation)
+void StatisticCollector::quick_sort(int* arr, int low,int high, bool presentation)
 {
     if (low < high)
     {
-        int pivot = partition(arr, low, high, sc);
+        int pivot = partition(arr, low, high);
         if (presentation) {
             std::cout << cBlue << "po wybraniu pivota = " << cReset << pivot << std::endl;
             print(arr, low, high-1);
         }
-        quick_sort(arr, low, pivot-1, sc, presentation) ;
-        quick_sort(arr, pivot + 1, high, sc, presentation) ;
+        quick_sort(arr, low, pivot-1,  presentation) ;
+        quick_sort(arr, pivot + 1, high,  presentation) ;
     }
 }
 
 
 
-void hybrid_quick_sort(int* arr, int low, int high, StatisticCollector& sc, bool presentation)
+void StatisticCollector::hybrid_quick_sort(int* arr, int low, int high, bool presentation)
 {
     while (low < high)
     {
 
         if (high-low + 1 < 10)
         {
-            insertion_sort(arr, low, high, sc, presentation);
+            insertion_sort(arr, low, high,  presentation);
             break;
         }
 
         else
 
         {
-            int pivot = partition(arr, low, high, sc) ;
+            int pivot = partition(arr, low, high) ;
 
             if (presentation) {
                 std::cout << cBlue << "po wybraniu pivota = " << cReset << pivot << std::endl;
@@ -116,7 +117,7 @@ void hybrid_quick_sort(int* arr, int low, int high, StatisticCollector& sc, bool
 
             if (pivot-low<high-pivot)
             {
-                hybrid_quick_sort(arr, low, pivot - 1, sc, presentation);
+                hybrid_quick_sort(arr, low, pivot - 1,  presentation);
                 low = pivot + 1;
             }
             else
@@ -124,7 +125,7 @@ void hybrid_quick_sort(int* arr, int low, int high, StatisticCollector& sc, bool
 
 
 
-                hybrid_quick_sort(arr, pivot + 1, high, sc, presentation);
+                hybrid_quick_sort(arr, pivot + 1, high,  presentation);
                 high = pivot-1;
             }
 
@@ -132,7 +133,7 @@ void hybrid_quick_sort(int* arr, int low, int high, StatisticCollector& sc, bool
 
     }
 }
-void merge(int* arr, int l, int m, int r, StatisticCollector& sc)
+void StatisticCollector::merge(int* arr, int l, int m, int r)
 {
 
     int n1 = m - l + 1;
@@ -143,11 +144,12 @@ void merge(int* arr, int l, int m, int r, StatisticCollector& sc)
 
     for (int i = 0; i < n1; ++i) {
         L[i] = arr[l + i];
-        sc.partialSwaps++;
+        partialSwaps++;
+
     }
     for (int j = 0; j < n2; ++j) {
         R[j] = arr[m + 1 + j];
-        sc.partialSwaps++;
+        partialSwaps++;
     }
 
 
@@ -156,15 +158,15 @@ void merge(int* arr, int l, int m, int r, StatisticCollector& sc)
     int k = l;
     while (i < n1 && j < n2) {
         if (L[i] <= R[j]) {
-            sc.partialComps++;
+            this->partialComps++;
             arr[k] = L[i];
-            sc.partialSwaps++;
+            partialSwaps++;
             i++;
         }
         else {
-            sc.partialComps++;
+            this->partialComps++;
             arr[k] = R[j];
-            sc.partialSwaps++;
+            partialSwaps++;
             j++;
         }
         k++;
@@ -173,68 +175,68 @@ void merge(int* arr, int l, int m, int r, StatisticCollector& sc)
 
     while (i < n1) {
         arr[k] = L[i];
-        sc.partialSwaps++;
+        partialSwaps++;
         i++;
         k++;
     }
 
     while (j < n2) {
         arr[k] = R[j];
-        sc.partialSwaps++;
+        partialSwaps++;
         j++;
         k++;
     }
 }
 
 
-void mergeSort(int* arr, int l, int r, StatisticCollector& sc, bool presentation)
+void StatisticCollector::mergeSort(int* arr, int l, int r, bool presentation)
 {
     if (l < r) {
         int m = l + (r - l) / 2;
 
-        mergeSort(arr, l, m,sc, presentation);
-        mergeSort(arr, m + 1, r,sc, presentation);
-        merge(arr, l, m, r,sc);
+        mergeSort(arr, l, m, presentation);
+        mergeSort(arr, m + 1, r, presentation);
+        merge(arr, l, m, r);
         if (presentation) {
             std::cout << cBlue << "po mergowaniu\n" << cReset;
             print(arr, l, r-1);
         }
     }
 }
-std::pair<int,int> dual_partition(int* arr, int low, int high, StatisticCollector& sc) {
+std::pair<int,int> StatisticCollector::dual_partition(int* arr, int low, int high) {
     if (arr[low] > arr[high]) {
         swap(&arr[low], &arr[high]);
-        sc.partialSwaps+=2;
+        partialSwaps+=2;
     }
-    sc.partialComps++;
+    partialComps++;
 
     int j = low + 1;
     int g = high - 1, k = low + 1, p = arr[low], q = arr[high];
-    sc.partialSwaps+=2;
+    partialSwaps+=2;
     while (k <= g) {
 
         if (arr[k] < p) {
             swap(&arr[k], &arr[j]);
-            sc.partialSwaps++;
+            partialSwaps++;
             j++;
         }
         else if (arr[k] >= q) {
             while (arr[g] > q && k < g) {
                 g--;
-                sc.partialComps++;
+                partialComps++;
             }
-            sc.partialComps++;
+            partialComps++;
             swap(&arr[k], &arr[g]);
-            sc.partialSwaps++;
+            partialSwaps++;
             g--;
             if (arr[k] < p) {
                 swap(&arr[k], &arr[j]);
-                sc.partialSwaps++;
+                partialSwaps++;
                 j++;
             }
-            sc.partialComps++;
+            partialComps++;
         }
-        sc.partialComps++;
+        partialComps++;
         k++;
     }
     j--;
@@ -242,19 +244,19 @@ std::pair<int,int> dual_partition(int* arr, int low, int high, StatisticCollecto
 
     swap(&arr[low], &arr[j]);
     swap(&arr[high], &arr[g]);
-    sc.partialSwaps+=2;
+    partialSwaps+=2;
 
     return std::pair<int,int>(j,g);
 }
-void dualPivotQuickSort(int* arr, int low, int high, StatisticCollector& sc, bool presentation) {
+void StatisticCollector::dualPivotQuickSort(int* arr, int low, int high,  bool presentation) {
     if (low < high) {
-        std::pair<int,int> p = dual_partition(arr, low, high, sc);
+        std::pair<int,int> p = dual_partition(arr, low, high);
         if (presentation) {
             std::cout << cBlue << "po wybraniu pivotow = (" << p.first << "," << p.second << ")" << cReset << std::endl;
             print(arr, low, high-1);
         }
-        dualPivotQuickSort(arr, low, p.first - 1, sc, presentation);
-        dualPivotQuickSort(arr, p.first + 1, p.second - 1, sc, presentation);
-        dualPivotQuickSort(arr, p.second + 1, high, sc, presentation);
+        dualPivotQuickSort(arr, low, p.first - 1,  presentation);
+        dualPivotQuickSort(arr, p.first + 1, p.second - 1,  presentation);
+        dualPivotQuickSort(arr, p.second + 1, high, presentation);
     }
 }
