@@ -1,1 +1,27 @@
 /Pathfinding/A_star/cmake-build-debug/
+ .idea/
+        Data-Structures/
+        Pathfinding/A_star/.idea/
+        Pathfinding/A_star/.vscode/
+        Pathfinding/A_star/a.out
+        Pathfinding/A_star/bst.cpp
+        Pathfinding/A_star/build/
+        Pathfinding/A_star/googletest/
+        Pathfinding/A_star/logs/
+        Pathfinding/Dijkstra/Binary-Heap/.idea/
+        Pathfinding/Dijkstra/Binary-Heap/cmake-build-debug-wsl/
+        Pathfinding/Dijkstra/Binary-Heap/googletest
+        Pathfinding/Dijkstra/dataset/
+        Pathfinding/MiniMax/external/game_client
+        Pathfinding/MiniMax/external/game_server
+        Quick-Select/.idea/
+        Quick-Select/build/
+        Quick-Select/cmake-build-debug/
+        Quick-Select/data/
+        Quick-Select/file.txt
+        Quick-Select/googletest/
+        Sorting-Algorithms/.idea/
+        Sorting-Algorithms/build/
+        Sorting-Algorithms/cmake-build-debug-wsl/
+        Sorting-Algorithms/data/
+        Sorting-Algorithms/googletest
