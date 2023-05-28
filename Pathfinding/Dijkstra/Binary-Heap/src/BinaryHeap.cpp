@@ -71,3 +71,7 @@ void BinaryHeap::print_heap_unordered() {
     }
     std::cout << std::endl;
 }
+
+bool BinaryHeap::is_empty() {
+    return heap_size == 0;
+}

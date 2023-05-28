@@ -13,6 +13,12 @@ struct Vertex {
     Vertex() = default;
     Vertex(int _id) : id(_id) {}
     Vertex(int _id, int _dist) : id(_id), dist(_dist) {}
+    ~Vertex() {
+        for (auto neighbour : neighbours) {
+            //neighbour.first = nullptr;
+        }
+    }
+
 };
 /*
  *
@@ -22,17 +28,19 @@ struct Vertex {
  *
  */
 class DirectedGraph {
-    int v;
-    int e;
+    int V;
+    int E;
     std::vector<Vertex*> vertices;
 public:
-
+    std::vector<Vertex*>& get_vertices();
     DirectedGraph() = default;
     DirectedGraph(int _v, int _e);
     void add_edge(int v1, int x1, int cost);
     void add_vertex(int v);
     Vertex* get_vertex(int v);
+    int get_cost(Vertex* u, Vertex* v);
     void print_graph();
+    int get_v();
 
 };
 

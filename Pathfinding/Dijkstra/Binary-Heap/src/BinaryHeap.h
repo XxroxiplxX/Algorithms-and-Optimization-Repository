@@ -21,6 +21,7 @@ public:
 
     BinaryHeap() = default;
     ~BinaryHeap() {
+
         delete[] elements;
     }
     int parent(int i);
@@ -30,7 +31,7 @@ public:
     int get_root();
     void insert_key(Vertex* i);
     Vertex* extract_min();
-    void decrease_key(int key, int new_val);
+    bool is_empty();
     int get_size() {
         return heap_size;
     }

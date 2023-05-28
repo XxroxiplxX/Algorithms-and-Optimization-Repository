@@ -5,7 +5,7 @@
 #include <iostream>
 #include "DirectedGraph.h"
 
-DirectedGraph::DirectedGraph(int _v, int _e) : v(_v), e(_e) {
+DirectedGraph::DirectedGraph(int _v, int _e) : V(_v), E(_e) {
     vertices = std::vector<Vertex*>(_v, nullptr);
 }
 
@@ -34,4 +34,21 @@ void DirectedGraph::print_graph() {
         }
     }
 
+}
+
+std::vector<Vertex *> &DirectedGraph::get_vertices() {
+    return vertices;
+}
+
+int DirectedGraph::get_v() {
+    return V;
+}
+
+int DirectedGraph::get_cost(Vertex* u, Vertex* v) {
+    for (auto neighbour : u->neighbours) {
+        if (neighbour.first->id == v->id) {
+            return neighbour.second;
+        }
+    }
+    return -1;
 }
