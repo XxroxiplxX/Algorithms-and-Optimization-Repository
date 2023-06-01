@@ -10,12 +10,33 @@ GraphParser::GraphParser(std::string directory) {
 
 DirectedGraph* GraphParser::build_graph() {
 
-    std::string line, sv, se;
+    std::string line, sv, se, sh;
     bool e_flag = false;
     bool v_flag = false;
     int spaces = 0;
     int c = 0;
     getline(ifs, line);
+    while (c < line.length() - 1 and spaces != 1) {
+        sh += line[c];
+        sh += line[c + 1];
+        if (sh == "hi") {
+            sh = "";
+            int i = c + 3;
+            while (spaces != 1) {
+                if (line[i] == ' ') {
+                    spaces++;
+                } else {
+                    sh += line[i];
+                    i++;
+                }
+            }
+        } else {
+            sh = "";
+        }
+        c++;
+    }
+    spaces = 0;
+    c = 0;
     getline(ifs, line);
     for (auto _char : line) {
         if (_char == ' ') {
@@ -36,7 +57,7 @@ DirectedGraph* GraphParser::build_graph() {
         }
 
     }
-    auto graph = new DirectedGraph(std::stoi(sv), std::stoi(se));
+    auto graph = new DirectedGraph(std::stoi(sv), std::stoi(se), std::stoi(sh));
     c+=2;
     std::string sv1, sv2, cost;
     while (getline(ifs, line)) {

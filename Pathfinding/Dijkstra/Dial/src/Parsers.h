@@ -2,8 +2,8 @@
 // Created by korycki on 28.05.2023.
 //
 
-#ifndef BINARY_HEAP_PARSERS_H
-#define BINARY_HEAP_PARSERS_H
+#ifndef DIAL_PARSERS_H
+#define DIAL_PARSERS_H
 #include <iostream>
 #include <fstream>
 #include <list>
@@ -37,4 +37,4 @@ public:
     std::list<int> build_parameters();
 };
 
-#endif //BINARY_HEAP_PARSERS_H
+#endif //DIAL_PARSERS_H

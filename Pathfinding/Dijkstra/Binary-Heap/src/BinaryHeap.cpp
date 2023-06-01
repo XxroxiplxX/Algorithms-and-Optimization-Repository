@@ -3,10 +3,14 @@
 //
 
 #include "BinaryHeap.h"
-void swap(Vertex** elements, int i, int j) {
+void BinaryHeap::swap_elements(int i, int j) {
     auto tmp = elements[i];
     elements[i] = elements[j];
     elements[j] = tmp;
+
+    position[elements[i]->id] = i;
+    position[elements[j]->id] = j;
+
 }
 int BinaryHeap::parent(int i) {
     return (i-1)/2;
@@ -31,7 +35,7 @@ void BinaryHeap::heapify(int i) {
         smallest = r;
     }
     if (smallest != i) {
-        swap(elements, i, smallest);
+        swap_elements(i, smallest);
         heapify(smallest);
     }
 }
@@ -44,8 +48,9 @@ void BinaryHeap::insert_key(Vertex* k) {
     heap_size++;
     int i = heap_size - 1;
     elements[i] = k;
+    position[k->id] = i;
     while (i != 0 and elements[parent(i)]->dist > elements[i]->dist) {
-        swap(elements, i, parent(i));
+        swap_elements(i, parent(i));
         i = parent(i);
     }
 }
@@ -74,4 +79,14 @@ void BinaryHeap::print_heap_unordered() {
 
 bool BinaryHeap::is_empty() {
     return heap_size == 0;
+}
+
+void BinaryHeap::decrease_key(Vertex *v, int new_distance) {
+
+    int i = position[v->id];
+    elements[i]->dist = new_distance;
+    while (i != 0 and elements[parent(i)]->dist > elements[i]->dist) {
+        swap_elements(i, parent(i));
+        i = parent(i);
+    }
 }

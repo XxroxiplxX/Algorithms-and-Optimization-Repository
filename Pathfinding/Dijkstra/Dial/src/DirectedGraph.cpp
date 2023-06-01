@@ -5,7 +5,7 @@
 #include <iostream>
 #include "DirectedGraph.h"
 
-DirectedGraph::DirectedGraph(int _v, int _e) : V(_v), E(_e) {
+DirectedGraph::DirectedGraph(int _v, int _e, int _highest_cost) : V(_v), E(_e), highest_cost(_highest_cost) {
     vertices = std::vector<Vertex*>(_v, nullptr);
 }
 
@@ -52,8 +52,13 @@ int DirectedGraph::get_cost(Vertex* u, Vertex* v) {
     }
     return -1;
 }
+
+int DirectedGraph::get_highest_cost() {
+    return highest_cost;
+}
+
 void DirectedGraph::print_distances() {
-    for (auto v : vertices) {
-        std::cout << v->id << "   " << v->dist << std::endl;
-    }
+        for (auto v : vertices) {
+            std::cout << v->id << "   " << v->dist << std::endl;
+        }
 }

@@ -7,26 +7,25 @@
 #include <climits>
 #include <iostream>
 #include "DirectedGraph.h"
-
+#include <vector>
 class BinaryHeap {
     //first is value and second is ordered key
-    Vertex** elements;
+    std::vector<Vertex*> elements;
+    int* position;
     int capacity;
     int heap_size;
 public:
     explicit BinaryHeap(int _capacity) :heap_size(0), capacity(_capacity) {
-        elements = new Vertex* [_capacity];
+        elements = std::vector<Vertex*>(_capacity);
+        position = new int[capacity];
     }
-
-
     BinaryHeap() = default;
     ~BinaryHeap() {
-
-        delete[] elements;
+        delete[] position;
     }
-    int parent(int i);
-    int left(int i);
-    int right(int i);
+    static int parent(int i);
+    static int left(int i);
+    static int right(int i);
     void heapify(int i);
     int get_root();
     void insert_key(Vertex* i);
@@ -38,9 +37,10 @@ public:
     int check_min() {
         return elements[0]->dist;
     }
-
+    void decrease_key(Vertex* v, int new_distance);
+    void swap_elements(int i, int j);
     void print_heap_unordered();
 };
-void swap(Vertex**, int i, int j);
+
 
 #endif //BINARY_HEAP_BINARYHEAP_H
