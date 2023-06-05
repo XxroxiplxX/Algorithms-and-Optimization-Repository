@@ -19,7 +19,7 @@ TEST_F(CircularArrayTest, CircularArray_utils) {
     uut.set_element(new Vertex(9), 5);
     EXPECT_EQ(9, uut.get_element(5)->id);
 
-EXPECT_EQ(3, uut.get_ful_size());
+EXPECT_EQ(3, uut.get_full_size());
     EXPECT_FALSE(uut.empty(5));
     uut.delete_element(5);
     uut.delete_element(5);

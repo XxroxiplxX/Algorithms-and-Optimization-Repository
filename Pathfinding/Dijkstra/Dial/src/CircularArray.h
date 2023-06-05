@@ -7,12 +7,14 @@
 
 
 #include <list>
+#include <iostream>
+
 template <class T> struct Node {
     Node<T>* next;
     T key;
     Node() : next(nullptr) {}
     ~Node() {
-        next = nullptr;
+        //next = nullptr;
     }
 
 };
@@ -20,6 +22,7 @@ template <class T> class List {
     Node<T>* head;
     void clear(Node<T>*);
     int size;
+    int c = 0;
 public:
     List() : head(nullptr), size(0) {}
     T get_front();
@@ -61,8 +64,8 @@ void List<T>::remove_front() {
         head = head->next;
         tmp->next = nullptr;
         delete tmp;
+        size--;
     }
-    size--;
 }
 
 template<class T>
@@ -74,6 +77,7 @@ template<class T>
 void List<T>::clear(Node<T>* node) {
     if (node == nullptr) return;
     if (node->next == nullptr) {
+        //std::cout << "usuwam " << node->key.id;
         delete node;
     } else {
         clear(node->next);
@@ -84,6 +88,12 @@ template<class T>
 int List<T>::get_size() {
     return size;
 }
+
+
+
+
+
+
 
 template <class T> class CircularArray {
     std::vector<List<T>> array;
@@ -96,8 +106,9 @@ public:
     ~CircularArray();
     void delete_element(int key);
     int get_size();
-    int get_ful_size();
+    int get_full_size();
     bool empty(int key);
+    int get_bucket_size(int key);
 };
 
 template<class T>
@@ -136,12 +147,17 @@ bool CircularArray<T>::empty(int key) {
 }
 
 template<class T>
-int CircularArray<T>::get_ful_size() {
+int CircularArray<T>::get_full_size() {
     int sum_size = 0;
     for (int i = 0; i < size; i++) {
         sum_size += array[i].get_size();
     }
     return sum_size;
+}
+
+template<class T>
+int CircularArray<T>::get_bucket_size(int key) {
+    return array[key].get_size();
 }
 
 

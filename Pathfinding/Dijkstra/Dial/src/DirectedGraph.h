@@ -15,9 +15,7 @@ struct Vertex {
     Vertex(int _id) : id(_id), dist(INT_MAX) {}
     Vertex(int _id, int _dist) : id(_id), dist(_dist) {}
     ~Vertex() {
-        for (auto neighbour : neighbours) {
-            //neighbour.first = nullptr;
-        }
+
     }
 
 };
@@ -45,6 +43,7 @@ public:
     int get_v();
     int get_highest_cost();
     void print_distances();
+    ~DirectedGraph();
 };
 
 

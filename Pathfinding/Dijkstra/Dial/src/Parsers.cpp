@@ -16,6 +16,7 @@ DirectedGraph* GraphParser::build_graph() {
     int spaces = 0;
     int c = 0;
     getline(ifs, line);
+    /*
     while (c < line.length() - 1 and spaces != 1) {
         sh += line[c];
         sh += line[c + 1];
@@ -34,7 +35,7 @@ DirectedGraph* GraphParser::build_graph() {
             sh = "";
         }
         c++;
-    }
+    }*/
     spaces = 0;
     c = 0;
     getline(ifs, line);
@@ -57,7 +58,7 @@ DirectedGraph* GraphParser::build_graph() {
         }
 
     }
-    auto graph = new DirectedGraph(std::stoi(sv), std::stoi(se), std::stoi(sh));
+    auto graph = new DirectedGraph(std::stoi(sv), std::stoi(se), 16);
     c+=2;
     std::string sv1, sv2, cost;
     while (getline(ifs, line)) {

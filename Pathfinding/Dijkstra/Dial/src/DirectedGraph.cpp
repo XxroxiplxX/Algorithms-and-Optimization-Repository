@@ -62,3 +62,10 @@ void DirectedGraph::print_distances() {
             std::cout << v->id << "   " << v->dist << std::endl;
         }
 }
+
+DirectedGraph::~DirectedGraph() {
+    for (int i = 0; i < vertices.size(); i++) {
+        delete vertices[i];
+    }
+
+}
