@@ -31,6 +31,7 @@ public:
     void remove_front();
     ~List();
     int get_size();
+    void remove_element(T element);
 };
 
 template<class T>
@@ -89,10 +90,33 @@ int List<T>::get_size() {
     return size;
 }
 
-
-
-
-
+template<class T>
+void List<T>::remove_element(T element) {
+    if (!head) {
+        return;
+    }
+    if (!head->next) {
+        remove_front();
+        return;
+    }
+    if (head->key == element) {
+        remove_front();
+        return;
+    }
+    auto tmp = head;
+    Node<T>* prev;
+    while (tmp->next and tmp->key != element) {
+        prev = tmp;
+        tmp = tmp->next;
+    }
+    //tmp is a node with specified element
+    if (tmp->next) {
+        if (prev->next == nullptr or tmp->next == nullptr) std::cout << "aaa\n";
+        prev->next = tmp->next;
+        delete tmp;
+        size--;
+    }
+}
 
 
 template <class T> class CircularArray {
@@ -104,7 +128,7 @@ public:
     CircularArray() = default;
     explicit CircularArray(int _size);
     ~CircularArray();
-    void delete_element(int key);
+    void delete_element(int key, T element);
     int get_size();
     int get_full_size();
     bool empty(int key);
@@ -132,8 +156,8 @@ CircularArray<T>::~CircularArray() {
 }
 
 template<class T>
-void CircularArray<T>::delete_element(int key) {
-    array[key%size].remove_front();
+void CircularArray<T>::delete_element(int key, T element) {
+    array[key%size].remove_element(element);
 }
 
 template<class T>

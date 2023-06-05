@@ -21,7 +21,7 @@ void dijkstra_to_all_nodes(Vertex* source, DirectedGraph& graph) {
             while (!cubes->empty(i)) {
 
                 auto u = graph.get_vertex(cubes->get_element(i));
-                cubes->delete_element(i);
+                cubes->delete_element(i, u->id);
                 checked++;
 
                 for (auto& v : u->neighbours) {
@@ -33,7 +33,7 @@ void dijkstra_to_all_nodes(Vertex* source, DirectedGraph& graph) {
                         cubes->set_element(v.first->id, alt);
                     } else if (alt < v.first->dist) {
 
-                        cubes->delete_element(v.first->dist);
+                        cubes->delete_element(v.first->dist, v.first->id);
                         v.first->dist = alt;
                         cubes->set_element(v.first->id, alt);
                     }
