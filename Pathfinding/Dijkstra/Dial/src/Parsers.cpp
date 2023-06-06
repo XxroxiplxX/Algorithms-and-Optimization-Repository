@@ -58,7 +58,7 @@ DirectedGraph* GraphParser::build_graph() {
         }
 
     }
-    auto graph = new DirectedGraph(std::stoi(sv), std::stoi(se), 16);
+    auto graph = new DirectedGraph(std::stoi(sv), std::stoi(se), 268435456);
     c+=2;
     std::string sv1, sv2, cost;
     while (getline(ifs, line)) {

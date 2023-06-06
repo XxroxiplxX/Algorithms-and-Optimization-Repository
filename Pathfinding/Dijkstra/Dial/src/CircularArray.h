@@ -6,7 +6,7 @@
 #define DIAL_CIRCULARARRAY_H
 
 
-#include <list>
+
 #include <iostream>
 
 template <class T> struct Node {
@@ -41,6 +41,8 @@ T List<T>::get_front() {
 
 template<class T>
 void List<T>::push_front(T element) {
+
+
     if (head != nullptr) {
         auto head_cp = head;
         head = new Node<T>();
@@ -67,6 +69,10 @@ void List<T>::remove_front() {
         delete tmp;
         size--;
     }
+    if (size == 0) {
+
+        //head = nullptr;
+    }
 }
 
 template<class T>
@@ -78,7 +84,7 @@ template<class T>
 void List<T>::clear(Node<T>* node) {
     if (node == nullptr) return;
     if (node->next == nullptr) {
-        //std::cout << "usuwam " << node->key.id;
+
         delete node;
     } else {
         clear(node->next);
@@ -111,7 +117,6 @@ void List<T>::remove_element(T element) {
     }
     //tmp is a node with specified element
     if (tmp->next) {
-        if (prev->next == nullptr or tmp->next == nullptr) std::cout << "aaa\n";
         prev->next = tmp->next;
         delete tmp;
         size--;
@@ -123,16 +128,16 @@ template <class T> class CircularArray {
     std::vector<List<T>> array;
     int size;
 public:
-    T get_element(int key);
-    void set_element(T element, int key);
+    T get_element(unsigned long long& key);
+    void set_element(T element, unsigned long long& key);
     CircularArray() = default;
     explicit CircularArray(int _size);
     ~CircularArray();
-    void delete_element(int key, T element);
+    void delete_element(unsigned long long& key, T element);
     int get_size();
     int get_full_size();
-    bool empty(int key);
-    int get_bucket_size(int key);
+    bool empty(unsigned long long& key);
+    int get_bucket_size(unsigned long long& key);
 };
 
 template<class T>
@@ -141,12 +146,13 @@ CircularArray<T>::CircularArray(int _size) : size(_size) {
 }
 
 template<class T>
-void CircularArray<T>::set_element(T element, int key) {
+void CircularArray<T>::set_element(T element, unsigned long long& key) {
+    //std::cout << key << std::endl;
     array[key%size].push_front(element);
 }
 
 template<class T>
-T CircularArray<T>::get_element(int key) {
+T CircularArray<T>::get_element(unsigned long long& key) {
     return array[key%size].get_front();
 }
 
@@ -156,7 +162,7 @@ CircularArray<T>::~CircularArray() {
 }
 
 template<class T>
-void CircularArray<T>::delete_element(int key, T element) {
+void CircularArray<T>::delete_element(unsigned long long& key, T element) {
     array[key%size].remove_element(element);
 }
 
@@ -166,7 +172,7 @@ int CircularArray<T>::get_size() {
 }
 
 template<class T>
-bool CircularArray<T>::empty(int key) {
+bool CircularArray<T>::empty(unsigned long long& key) {
     return array[key%size].empty();
 }
 
@@ -180,7 +186,7 @@ int CircularArray<T>::get_full_size() {
 }
 
 template<class T>
-int CircularArray<T>::get_bucket_size(int key) {
+int CircularArray<T>::get_bucket_size(unsigned long long& key) {
     return array[key].get_size();
 }
 

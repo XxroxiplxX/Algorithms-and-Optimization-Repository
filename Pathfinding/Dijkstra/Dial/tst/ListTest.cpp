@@ -14,4 +14,5 @@ TEST(ListTest, remove_specified_element) {
         EXPECT_FALSE(list.get_front() == 3);
         list.remove_front();
     }
+    list.push_front(11);
 }

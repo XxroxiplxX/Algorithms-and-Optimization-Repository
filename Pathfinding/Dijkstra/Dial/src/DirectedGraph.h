@@ -8,11 +8,11 @@
 #include <map>
 #include <climits>
 struct Vertex {
-    int dist;
     int id;
+    unsigned long long dist;
     std::map<Vertex*, int> neighbours;
-    Vertex() = default;
-    Vertex(int _id) : id(_id), dist(INT_MAX) {}
+
+    Vertex(int _id) : id(_id), dist(ULLONG_MAX) {}
     Vertex(int _id, int _dist) : id(_id), dist(_dist) {}
     ~Vertex() {
 

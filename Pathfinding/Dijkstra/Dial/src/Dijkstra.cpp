@@ -10,13 +10,14 @@ void dijkstra_to_all_nodes(Vertex* source, DirectedGraph& graph) {
     auto l = new Logger("../../logs/dial.log");
     std::cout << graph.get_v() << std::endl;
     //list of vertices ids
-    CircularArray<int>* cubes = new CircularArray<int>(graph.get_highest_cost() + 1);
+    CircularArray<unsigned long long>* cubes = new CircularArray<unsigned long long>(graph.get_highest_cost() + 1);
     int checked = 0;
     source->dist = 0;
-    cubes->set_element(source->id, 0);
+    unsigned long long zero = 0;
+    cubes->set_element(source->id, zero);
     while (cubes->get_full_size() != 0) {
         l->log("checked: ", cubes->get_full_size());
-        for (int i = 0; i < cubes->get_size(); i++) {
+        for (unsigned long long i = 0; i < cubes->get_size(); i++) {
 
             while (!cubes->empty(i)) {
 
@@ -26,15 +27,17 @@ void dijkstra_to_all_nodes(Vertex* source, DirectedGraph& graph) {
 
                 for (auto& v : u->neighbours) {
 
-                    int alt = u->dist + v.second;
-                    if (v.first->dist == INT_MAX) {
+                    unsigned long long alt = u->dist + v.second;
+                    if (v.first->dist == ULLONG_MAX) {
 
                         v.first->dist = alt;
+                        //std::cout << "a" << alt << std::endl;
                         cubes->set_element(v.first->id, alt);
                     } else if (alt < v.first->dist) {
 
                         cubes->delete_element(v.first->dist, v.first->id);
                         v.first->dist = alt;
+                        //std::cout << "b" << alt << std::endl;
                         cubes->set_element(v.first->id, alt);
                     }
                 }
