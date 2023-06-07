@@ -6,6 +6,6 @@ set(SOURCES ${SOURCES})
 
 add_executable(${BINARY}_run ${SOURCES})
 
-add_library(${BINARY}_lib STATIC ${SOURCES})
+add_library(${BINARY}_lib STATIC ${SOURCES} CircularArray.cpp)
 
 target_link_libraries(${BINARY}_lib Logging)

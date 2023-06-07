@@ -1,7 +1,9 @@
 #include <iostream>
 #include "Parsers.h"
 #include "Dijkstra.h"
+#include <list>
 int main() {
+
     auto parser = new GraphParser("../../../dataset/ch9-1.1/inputs/Square-C/Square-C.14.0.gr");
     auto graph = parser->build_graph();
 
@@ -10,7 +12,6 @@ int main() {
     dijkstra_to_all_nodes(graph->get_vertex(951313), *graph);
     delete parser;
     delete graph;
-
 
 
 

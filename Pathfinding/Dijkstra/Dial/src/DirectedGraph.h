@@ -6,12 +6,13 @@
 #define DIAL_DIRECTEDGRAPH_H
 #include <vector>
 #include <map>
+#include <list>
 #include <climits>
 struct Vertex {
     int id;
     unsigned long long dist;
     std::map<Vertex*, int> neighbours;
-
+    std::list<int>::iterator position_in_bucket;
     Vertex(int _id) : id(_id), dist(ULLONG_MAX) {}
     Vertex(int _id, int _dist) : id(_id), dist(_dist) {}
     ~Vertex() {
