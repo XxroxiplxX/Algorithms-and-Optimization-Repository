@@ -5,6 +5,10 @@
 #include "Parsers.h"
 
 GraphParser::GraphParser(std::string directory) {
+    if (directory.substr(directory.length() - 3, 3) != ".gr") {
+        std::cerr << "unknown format in graph\n";
+        exit(1);
+    }
     open_file(std::move(directory));
 }
 
@@ -16,26 +20,7 @@ DirectedGraph* GraphParser::build_graph() {
     int spaces = 0;
     int c = 0;
     getline(ifs, line);
-    /*
-    while (c < line.length() - 1 and spaces != 1) {
-        sh += line[c];
-        sh += line[c + 1];
-        if (sh == "hi") {
-            sh = "";
-            int i = c + 3;
-            while (spaces != 1) {
-                if (line[i] == ' ') {
-                    spaces++;
-                } else {
-                    sh += line[i];
-                    i++;
-                }
-            }
-        } else {
-            sh = "";
-        }
-        c++;
-    }*/
+    int highest_cost = 0;
     spaces = 0;
     c = 0;
     getline(ifs, line);
@@ -58,7 +43,7 @@ DirectedGraph* GraphParser::build_graph() {
         }
 
     }
-    auto graph = new DirectedGraph(std::stoi(sv), std::stoi(se), 268435456);
+    auto graph = new DirectedGraph(std::stoi(sv), std::stoi(se));
     c+=2;
     std::string sv1, sv2, cost;
     while (getline(ifs, line)) {
@@ -74,12 +59,17 @@ DirectedGraph* GraphParser::build_graph() {
                 cost += _char;
             }
         }
-        graph->add_edge(std::stoi(sv1), std::stoi(sv2), std::stoi(cost));
+        int pot_cost = std::stoi(cost);
+        if (pot_cost > highest_cost) {
+            highest_cost = pot_cost;
+        }
+        graph->add_edge(std::stoi(sv1), std::stoi(sv2), pot_cost);
         sv1 = "";
         sv2 = "";
         cost = "";
         c++;
     }
+    graph->set_highest_cost(highest_cost);
 
     ifs.close();
     return graph;
@@ -90,34 +80,45 @@ GraphParser::~GraphParser() {
 }
 
 PairToPairParser::PairToPairParser(std::string directory) {
+    if (directory.substr(directory.length() - 4, 4) != ".p2p") {
+        std::cerr << "unknown format in pairs\n";
+        exit(1);
+    }
     open_file(std::move(directory));
 }
 
 std::list<std::pair<int, int>> PairToPairParser::build_parameters() {
     std::string line;
-    getline(ifs, line);
     int spaces = 0;
     std::string sv1, sv2;
     std::list<std::pair<int,int>> params;
     while (getline(ifs,line)) {
-        for (auto _char : line) {
-            if (_char == ' ') {
-                spaces++;
-            } else if (spaces == 1) {
-                sv1 += _char;
-            } else if (spaces == 2) {
-                sv2 += _char;
+        if (line[0] == 'q') {
+            for (auto _char : line) {
+                if (_char == ' ') {
+                    spaces++;
+                } else if (spaces == 1) {
+                    sv1 += _char;
+                } else if (spaces == 2) {
+                    sv2 += _char;
+                }
             }
+            params.push_front(std::pair<int,int>(std::stoi(sv1), std::stoi(sv2)));
+            sv1 = "";
+            sv2 = "";
+            spaces = 0;
         }
-        params.push_front(std::pair<int,int>(std::stoi(sv1), std::stoi(sv2)));
-        sv1 = "";
-        sv2 = "";
     }
     ifs.close();
-    return std::list<std::pair<int, int>>();
+    return params;
 }
 
 SourceParser::SourceParser(std::string directory) {
+    if (directory.substr(directory.length() - 3, 3) != ".ss") {
+        std::cout << directory.substr(directory.length() - 3, 2);
+        std::cerr << "unknown format in sources\n";
+        exit(1);
+    }
     open_file(std::move(directory));
 }
 
@@ -134,13 +135,15 @@ std::list<int> SourceParser::build_parameters() {
                     sv += _char;
                 }
             }
+            //std::cout << sv << std::endl;
             sources.push_front(std::stoi(sv));
             sv = "";
+            spaces = 0;
         }
 
     }
     ifs.close();
-    return std::list<int>();
+    return sources;
 }
 
 void Parser::open_file(std::string directory) {

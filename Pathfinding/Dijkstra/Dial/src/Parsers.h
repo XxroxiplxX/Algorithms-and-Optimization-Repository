@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <list>
+#include <string.h>
 #include "DirectedGraph.h"
 class Parser {
 protected:

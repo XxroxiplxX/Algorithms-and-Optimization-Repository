@@ -8,8 +8,8 @@
 using namespace Logging;
 void dijkstra_to_all_nodes(Vertex* source, DirectedGraph& graph) {
 
-    auto l = new Logger("../../logs/dial.log");
-    std::cout << graph.get_v() << std::endl;
+    //auto l = new Logger("../../logs/dial.log");
+    //std::cout << graph.get_v() << std::endl;
     //list of vertices ids
     CircularArray* buckets = new CircularArray(graph.get_highest_cost() + 1, graph);
     int checked = 0;
@@ -17,7 +17,7 @@ void dijkstra_to_all_nodes(Vertex* source, DirectedGraph& graph) {
     unsigned long long zero = 0;
     buckets->set_element(source->id, zero);
     while (buckets->get_full_size() != 0) {
-        l->log("checked: ", buckets->get_full_size());
+        //l->log("checked: ", buckets->get_full_size());
         for (unsigned long long i = 0; i < buckets->get_size(); i++) {
 
             while (!buckets->empty(i)) {
@@ -43,7 +43,7 @@ void dijkstra_to_all_nodes(Vertex* source, DirectedGraph& graph) {
             }
         }
     }
-    delete l;
+    //delete l;
     delete buckets;
-    graph.print_distances();
+    //graph.print_distances();
 }

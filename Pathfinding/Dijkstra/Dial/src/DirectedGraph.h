@@ -35,7 +35,8 @@ class DirectedGraph {
 public:
     std::vector<Vertex*>& get_vertices();
     DirectedGraph() = default;
-    DirectedGraph(int _v, int _e, int _hihest_cost);
+    DirectedGraph(int _v, int _e);
+    void set_highest_cost(int cost);
     void add_edge(int v1, int x1, int cost);
     void add_vertex(int v);
     Vertex* get_vertex(int v);

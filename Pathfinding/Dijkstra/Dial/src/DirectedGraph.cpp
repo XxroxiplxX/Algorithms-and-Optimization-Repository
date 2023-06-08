@@ -5,7 +5,7 @@
 #include <iostream>
 #include "DirectedGraph.h"
 
-DirectedGraph::DirectedGraph(int _v, int _e, int _highest_cost) : V(_v), E(_e), highest_cost(_highest_cost) {
+DirectedGraph::DirectedGraph(int _v, int _e) : V(_v), E(_e) {
     vertices = std::vector<Vertex*>(_v, nullptr);
 }
 
@@ -68,4 +68,8 @@ DirectedGraph::~DirectedGraph() {
         delete vertices[i];
     }
 
+}
+
+void DirectedGraph::set_highest_cost(int cost) {
+    highest_cost = cost;
 }
