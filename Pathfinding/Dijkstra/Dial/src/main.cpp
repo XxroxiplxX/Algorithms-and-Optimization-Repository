@@ -66,11 +66,14 @@ int main(int argc, char** argv) {
     } else {
         pairToPairParser = new PairToPairParser(data_dir);
         parameters = pairToPairParser->build_parameters();
-
+        delete pairToPairParser;
     }
+
+
     graphParser = new GraphParser(graph_dir);
     auto graph = graphParser->build_graph();
     delete graphParser;
+
 
     std::ofstream results(output_dir);
     long long avg_time = 0;
@@ -84,10 +87,17 @@ int main(int argc, char** argv) {
         }
     }
     std::reverse(clean_data.begin(), clean_data.end());
-    auto log_name = "../../logs/" + clean_data + ".log";
+    auto log_name = "logs/" + clean_data + ".log";
     auto logger = Logging::Logger(log_name);
 
     logger.log(log_name);
+    if (graph->get_highest_cost() > 16777216) {
+        logger.log("terminte, highest cost critical");
+        logger.close_logger();
+        results << "TERMINATE2\n";
+        results.close();
+        exit(3);
+    }
     //std::cout << "executing dial for\n" <<"graph file: " << graph_dir << std::endl;
     //std::cout << "input file: " << data_dir << std::endl;
     //std::cout << "output file: " << output_dir << std::endl;
@@ -200,5 +210,6 @@ int main(int argc, char** argv) {
 
     logger.log("task completed");
     logger.close_logger();
+    delete graph;
     return 0;
 }
