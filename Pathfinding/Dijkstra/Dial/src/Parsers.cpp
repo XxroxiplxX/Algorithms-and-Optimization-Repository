@@ -19,55 +19,62 @@ DirectedGraph* GraphParser::build_graph() {
     bool v_flag = false;
     int spaces = 0;
     int c = 0;
-    getline(ifs, line);
+    //getline(ifs, line);
     int highest_cost = 0;
     spaces = 0;
     c = 0;
-    getline(ifs, line);
-    for (auto _char : line) {
-        if (_char == ' ') {
-            spaces++;
-        } else {
-            if (spaces == 2) {
-                v_flag = true;
+    //getline(ifs, line);
+    bool go = true;
+    while (go and getline(ifs,line)) {
+        if (line[0] == 'p') {
+            for (auto _char : line) {
+                if (_char == ' ') {
+                    spaces++;
+                } else {
+                    if (spaces == 2) {
+                        v_flag = true;
+                    }
+                    if (spaces == 3) {
+                        e_flag = true;
+                        v_flag = false;
+                    }
+                    if (v_flag) {
+                        sv += _char;
+                    } else if (e_flag) {
+                        se += _char;
+                    }
+                }
             }
-            if (spaces == 3) {
-                e_flag = true;
-                v_flag = false;
-            }
-            if (v_flag) {
-                sv += _char;
-            } else if (e_flag) {
-                se += _char;
-            }
+            go = false;
         }
-
     }
     auto graph = new DirectedGraph(std::stoi(sv), std::stoi(se));
     c+=2;
     std::string sv1, sv2, cost;
     while (getline(ifs, line)) {
-        spaces = 0;
-        for (auto _char : line) {
-            if (_char == ' ') {
-                spaces++;
-            } else if (spaces == 1) {
-                sv1 += _char;
-            } else if (spaces == 2) {
-                sv2 += _char;
-            } else if (spaces == 3) {
-                cost += _char;
+        if (line[0] == 'a') {
+            spaces = 0;
+            for (auto _char : line) {
+                if (_char == ' ') {
+                    spaces++;
+                } else if (spaces == 1) {
+                    sv1 += _char;
+                } else if (spaces == 2) {
+                    sv2 += _char;
+                } else if (spaces == 3) {
+                    cost += _char;
+                }
             }
+            int pot_cost = std::stoi(cost);
+            if (pot_cost > highest_cost) {
+                highest_cost = pot_cost;
+            }
+            graph->add_edge(std::stoi(sv1), std::stoi(sv2), pot_cost);
+            sv1 = "";
+            sv2 = "";
+            cost = "";
+            c++;
         }
-        int pot_cost = std::stoi(cost);
-        if (pot_cost > highest_cost) {
-            highest_cost = pot_cost;
-        }
-        graph->add_edge(std::stoi(sv1), std::stoi(sv2), pot_cost);
-        sv1 = "";
-        sv2 = "";
-        cost = "";
-        c++;
     }
     graph->set_highest_cost(highest_cost);
 
