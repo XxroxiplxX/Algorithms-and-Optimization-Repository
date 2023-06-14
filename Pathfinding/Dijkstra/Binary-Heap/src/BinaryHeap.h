@@ -37,7 +37,7 @@ public:
     int check_min() {
         return elements[0]->dist;
     }
-    void decrease_key(Vertex* v, int new_distance);
+    void decrease_key(Vertex* v, unsigned long long new_distance);
     void swap_elements(int i, int j);
     void print_heap_unordered();
 };

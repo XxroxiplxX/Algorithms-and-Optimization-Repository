@@ -52,8 +52,28 @@ int DirectedGraph::get_cost(Vertex* u, Vertex* v) {
     }
     return -1;
 }
+
+int DirectedGraph::get_highest_cost() {
+    return highest_cost;
+}
+
 void DirectedGraph::print_distances() {
     for (auto v : vertices) {
         std::cout << v->id << "   " << v->dist << std::endl;
     }
+}
+
+DirectedGraph::~DirectedGraph() {
+    for (int i = 0; i < vertices.size(); i++) {
+        delete vertices[i];
+    }
+
+}
+
+void DirectedGraph::set_highest_cost(int cost) {
+    highest_cost = cost;
+}
+
+int DirectedGraph::get_e() {
+    return E;
 }

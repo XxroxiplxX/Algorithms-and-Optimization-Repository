@@ -81,7 +81,7 @@ bool BinaryHeap::is_empty() {
     return heap_size == 0;
 }
 
-void BinaryHeap::decrease_key(Vertex *v, int new_distance) {
+void BinaryHeap::decrease_key(Vertex *v, unsigned long long new_distance) {
 
     int i = position[v->id];
     elements[i]->dist = new_distance;

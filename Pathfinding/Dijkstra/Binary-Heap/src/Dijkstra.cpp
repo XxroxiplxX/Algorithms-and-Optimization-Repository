@@ -6,7 +6,7 @@ void dijkstra_to_all_nodes(Vertex* source, DirectedGraph* graph) {
 
     BinaryHeap queue = BinaryHeap(graph->get_v());
     for (auto v : graph->get_vertices()) {
-        v->dist = INT_MAX;
+        v->dist = ULLONG_MAX;
         queue.insert_key(v);
     }
     queue.decrease_key(source, 0);
@@ -15,13 +15,13 @@ void dijkstra_to_all_nodes(Vertex* source, DirectedGraph* graph) {
         auto u = queue.extract_min();
         checked++;
         for (auto v : u->neighbours) {
-            int alt = u->dist + v.second;
+            unsigned long long alt = u->dist + v.second;
             if (alt < v.first->dist) {
                 queue.decrease_key(v.first, alt);
             }
         }
     }
-    graph->print_distances();
+    //graph->print_distances();
 }
 int dijkstra_pair_to_pair(Vertex* source, Vertex* destination, DirectedGraph* graph) {
 
