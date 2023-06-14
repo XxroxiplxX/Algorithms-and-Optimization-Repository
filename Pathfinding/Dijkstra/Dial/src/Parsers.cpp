@@ -79,6 +79,10 @@ GraphParser::~GraphParser() {
     ifs.close();
 }
 
+Parser *GraphParser::init(const std::string& directory) {
+    return new GraphParser(directory);
+}
+
 PairToPairParser::PairToPairParser(std::string directory) {
     if (directory.substr(directory.length() - 4, 4) != ".p2p") {
         std::cerr << "unknown format in pairs\n";
@@ -87,11 +91,11 @@ PairToPairParser::PairToPairParser(std::string directory) {
     open_file(std::move(directory));
 }
 
-std::list<std::pair<int, int>> PairToPairParser::build_parameters() {
+Parameters* PairToPairParser::build_parameters() {
     std::string line;
     int spaces = 0;
     std::string sv1, sv2;
-    std::list<std::pair<int,int>> params;
+    auto pairs = new Parameters();
     while (getline(ifs,line)) {
         if (line[0] == 'q') {
             for (auto _char : line) {
@@ -103,14 +107,18 @@ std::list<std::pair<int, int>> PairToPairParser::build_parameters() {
                     sv2 += _char;
                 }
             }
-            params.push_front(std::pair<int,int>(std::stoi(sv1), std::stoi(sv2)));
+            pairs->get_pairs().push_front(std::pair<int,int>(std::stoi(sv1), std::stoi(sv2)));
             sv1 = "";
             sv2 = "";
             spaces = 0;
         }
     }
     ifs.close();
-    return params;
+    return pairs;
+}
+
+Parser *PairToPairParser::init(const std::string &directory) {
+    return new PairToPairParser(directory);
 }
 
 SourceParser::SourceParser(std::string directory) {
@@ -122,10 +130,10 @@ SourceParser::SourceParser(std::string directory) {
     open_file(std::move(directory));
 }
 
-std::list<int> SourceParser::build_parameters() {
+Parameters* SourceParser::build_parameters() {
     std::string line, sv;
     int spaces = 0;
-    std::list<int> sources;
+    auto sources = new Parameters();
     while (getline(ifs,line)) {
         if (line[0] == 's') {
             for (auto _char : line) {
@@ -136,7 +144,7 @@ std::list<int> SourceParser::build_parameters() {
                 }
             }
             //std::cout << sv << std::endl;
-            sources.push_front(std::stoi(sv));
+            sources->get_sources().push_front(std::stoi(sv));
             sv = "";
             spaces = 0;
         }
@@ -146,10 +154,15 @@ std::list<int> SourceParser::build_parameters() {
     return sources;
 }
 
-void Parser::open_file(std::string directory) {
+Parser *SourceParser::init(const std::string &directory) {
+    return new SourceParser(directory);
+}
+
+void Parser::open_file(const std::string& directory) {
     ifs = std::ifstream(directory, std::ios_base::in);
     if (!ifs) {
         std::cerr << "invalide flename\n";
         exit(1);
     }
 }
+

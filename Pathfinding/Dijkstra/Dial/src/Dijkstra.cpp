@@ -3,15 +3,15 @@
 //
 
 #include "Dijkstra.h"
-#include "Logger.h"
+
 #include <string>
-using namespace Logging;
-void dijkstra_to_all_nodes(Vertex* source, DirectedGraph& graph) {
+
+void dijkstra_to_all_nodes(Vertex* source, DirectedGraph* graph) {
 
     //auto l = new Logger("../../logs/dial.log");
     //std::cout << graph.get_v() << std::endl;
     //list of vertices ids
-    CircularArray* buckets = new CircularArray(graph.get_highest_cost() + 1, graph);
+    CircularArray* buckets = new CircularArray(graph->get_highest_cost() + 1, *graph);
     int checked = 0;
     source->dist = 0;
     unsigned long long zero = 0;
@@ -22,7 +22,7 @@ void dijkstra_to_all_nodes(Vertex* source, DirectedGraph& graph) {
 
             while (!buckets->empty(i)) {
 
-                auto u = graph.get_vertex(buckets->get_element(i));
+                auto u = graph->get_vertex(buckets->get_element(i));
                 buckets->delete_element(i, u->id);
                 checked++;
 
@@ -45,5 +45,5 @@ void dijkstra_to_all_nodes(Vertex* source, DirectedGraph& graph) {
     }
     //delete l;
     delete buckets;
-    //graph.print_distances();
+    //graph->print_distances();
 }

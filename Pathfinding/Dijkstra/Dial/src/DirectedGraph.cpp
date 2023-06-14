@@ -73,3 +73,7 @@ DirectedGraph::~DirectedGraph() {
 void DirectedGraph::set_highest_cost(int cost) {
     highest_cost = cost;
 }
+
+int DirectedGraph::get_e() {
+    return E;
+}

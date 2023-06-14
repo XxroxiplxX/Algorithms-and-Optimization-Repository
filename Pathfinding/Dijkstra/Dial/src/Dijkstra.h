@@ -8,7 +8,7 @@
 #include "DirectedGraph.h"
 #include "CircularArray.h"
 #include <iostream>
-void dijkstra_to_all_nodes(Vertex* source, DirectedGraph& graph);
+void dijkstra_to_all_nodes(Vertex* source, DirectedGraph* graph);
 int dijkstra_pair_to_pair(Vertex* source, Vertex* destination, DirectedGraph graph);
 
 #endif //DIAL_DIJKSTRA_H

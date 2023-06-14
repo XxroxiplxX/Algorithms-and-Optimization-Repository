@@ -43,6 +43,7 @@ public:
     int get_cost(Vertex* u, Vertex* v);
     void print_graph();
     int get_v();
+    int get_e();
     int get_highest_cost();
     void print_distances();
     ~DirectedGraph();
