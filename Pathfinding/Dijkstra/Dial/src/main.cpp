@@ -91,17 +91,11 @@ int main(int argc, char** argv) {
     auto logger = Logging::Logger(log_name);
 
     logger.log(log_name);
-    if (graph->get_highest_cost() > 16777216) {
-        logger.log("terminte, highest cost critical");
-        logger.close_logger();
-        results << "TERMINATE2\n";
-        results.close();
-        exit(3);
-    }
+
     //std::cout << "executing dial for\n" <<"graph file: " << graph_dir << std::endl;
     //std::cout << "input file: " << data_dir << std::endl;
     //std::cout << "output file: " << output_dir << std::endl;
-    logger.log("executing dial for\ngraph file: " + graph_dir);
+    logger.log("executing binary heap dijkstra for\ngraph file: " + graph_dir);
     logger.log("input file: " + data_dir);
     logger.log("output file: " + output_dir);
     if (second == SS) {

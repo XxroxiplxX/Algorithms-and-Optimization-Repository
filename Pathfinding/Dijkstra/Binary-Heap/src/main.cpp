@@ -87,7 +87,7 @@ int main(int argc, char** argv) {
         }
     }
     std::reverse(clean_data.begin(), clean_data.end());
-    auto log_name = "logs/" + clean_data + ".log";
+    auto log_name = "logs/Bin" + clean_data + ".log";
     auto logger = Logging::Logger(log_name);
 
     logger.log(log_name);
