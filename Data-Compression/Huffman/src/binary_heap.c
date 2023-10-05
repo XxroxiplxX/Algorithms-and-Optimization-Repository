@@ -49,7 +49,7 @@ void heapify(struct binary_heap* heap, int index) {
 
 void insert_node(binary_heap* heap,  huffman_node* node) {
     if (heap->curr_size == LANG) {
-        printf("Kopiec jest pełny, nie można wstawić więcej elementów.\n");
+        printf("heap full\n");
         return;
     }
 
